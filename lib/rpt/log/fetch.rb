@@ -31,8 +31,12 @@ module RPT
         end
       end
 
+      def get_size
+        self.class.head(@cfg.log_url).headers['content-length'].to_i
+      end
+
       def get_log
-        
+        self.class.get(@cfg.log_url, headers: { 'Range' => "bytes=#{@cfg.byte_start}-#{@cfg.byte_end}"}).to_s
       end
     end
   end
