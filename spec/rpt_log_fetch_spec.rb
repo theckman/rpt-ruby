@@ -1,11 +1,11 @@
-require_relative '../lib/rpt/log/fetch'
+require_relative '../lib/rpt/log/util/fetch'
 
-describe RPT::Log::Fetch do
+describe RPT::Log::Util::Fetch do
   let(:url) { 'http://www.mocky.io/v2/52ba9604dd10514d0084ef05' }
-  let(:fetch) { RPT::Log::Fetch.new(url) }
+  let(:fetch) { RPT::Log::Util::Fetch.new(url) }
   context "#new" do
-    it "should return an instance of RPT::Log::Fetch" do
-      fetch.should be_an_instance_of RPT::Log::Fetch
+    it "should return an instance of RPT::Log::Util::Fetch" do
+      fetch.should be_an_instance_of RPT::Log::Util::Fetch
     end
 
     it "should have a @cfg object which is an instance of OpenStruct" do
@@ -13,12 +13,12 @@ describe RPT::Log::Fetch do
     end
 
     it "should set the 'byte_start' config item if specified as arg:1" do
-      rlfetch = RPT::Log::Fetch.new(url, 10)
+      rlfetch = RPT::Log::Util::Fetch.new(url, 10)
       rlfetch.cfg.byte_start.should eql 10
     end
 
     it "should set the 'byte_end' config item if specified as arg:3" do
-      rlfetch = RPT::Log::Fetch.new(url, 10, 42)
+      rlfetch = RPT::Log::Util::Fetch.new(url, 10, 42)
       rlfetch.cfg.byte_end.should eql 42
     end
   end
