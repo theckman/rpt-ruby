@@ -1,11 +1,11 @@
-require_relative '../lib/arma/rpt/log/util/fetch'
+require_relative '../lib/rmuh/rpt/log/util/fetch'
 
-describe ArmA::RPT::Log::Util::Fetch do
+describe RMuh::RPT::Log::Util::Fetch do
   let(:url) { 'http://www.mocky.io/v2/52ba9604dd10514d0084ef05' }
-  let(:fetch) { ArmA::RPT::Log::Util::Fetch.new(url) }
+  let(:fetch) { RMuh::RPT::Log::Util::Fetch.new(url) }
   context "#new" do
-    it "should return an instance of ArmA::RPT::Log::Util::Fetch" do
-      fetch.should be_an_instance_of ArmA::RPT::Log::Util::Fetch
+    it "should return an instance of RMuh::RPT::Log::Util::Fetch" do
+      fetch.should be_an_instance_of RMuh::RPT::Log::Util::Fetch
     end
 
     it "should have a @cfg object which is an instance of OpenStruct" do
@@ -13,12 +13,12 @@ describe ArmA::RPT::Log::Util::Fetch do
     end
 
     it "should set the 'byte_start' config item if specified as arg:1" do
-      rlfetch = ArmA::RPT::Log::Util::Fetch.new(url, 10)
+      rlfetch = RMuh::RPT::Log::Util::Fetch.new(url, 10)
       rlfetch.cfg.byte_start.should eql 10
     end
 
     it "should set the 'byte_end' config item if specified as arg:3" do
-      rlfetch = ArmA::RPT::Log::Util::Fetch.new(url, 10, 42)
+      rlfetch = RMuh::RPT::Log::Util::Fetch.new(url, 10, 42)
       rlfetch.cfg.byte_end.should eql 42
     end
   end

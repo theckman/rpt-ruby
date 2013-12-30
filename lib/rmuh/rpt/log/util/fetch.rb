@@ -1,7 +1,7 @@
 require 'httparty'
 require 'ostruct'
 
-module ArmA
+module RMuh
   module RPT
     module Log
       module Util
