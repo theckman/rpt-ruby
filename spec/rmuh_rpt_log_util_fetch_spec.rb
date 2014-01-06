@@ -1,3 +1,4 @@
+require 'stringio'
 require_relative '../lib/rmuh/rpt/log/util/fetch'
 
 describe RMuh::RPT::Log::Util::Fetch do
@@ -80,8 +81,12 @@ describe RMuh::RPT::Log::Util::Fetch do
   end
 
   context "#get_log" do
+    it "should return a StringIO object" do
+      fetch.get_log.should be_an_instance_of StringIO
+    end
+
     it "should return the log" do
-      fetch.get_log.should eql 'RSpec, yo.'
+      fetch.get_log.read.should eql 'RSpec, yo.'
     end
   end
 end
