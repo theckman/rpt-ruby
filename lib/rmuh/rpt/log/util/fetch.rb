@@ -38,7 +38,7 @@ module RMuh
           end
 
           def get_log
-            self.class.get(@cfg.log_url, headers: { 'Range' => "bytes=#{@cfg.byte_start}-#{@cfg.byte_end}"}).to_s
+            StringIO.new(self.class.get(@cfg.log_url, headers: { 'Range' => "bytes=#{@cfg.byte_start}-#{@cfg.byte_end}"}).lines.map { |l| l.gsub!("\r", '') }.join)
           end
         end
       end
