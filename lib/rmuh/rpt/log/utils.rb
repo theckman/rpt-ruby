@@ -6,7 +6,7 @@ module RMuh
     module Log
       module Utils
 
-        def match_to_hash(match)
+        def m_to_h(match)
           h = {}
           match.names.each do |m|
             val = nil

@@ -42,13 +42,13 @@ module RMuh
             cleanlines = loglines.map do |l|
               if ANNOUNCEMENT.match(l)
                 # $~ == $LAST_MATCH_INFO (last Regexp MatchData)
-                line = {:type => :announcement}.merge(match_to_hash($~))
+                line = {:type => :announcement}.merge(m_to_h($~))
               elsif WOUNDED.match(l)
-                line = {:type => :wounded}.merge(match_to_hash($~))
+                line = {:type => :wounded}.merge(m_to_h($~))
               elsif KILLED.match(l)
-                line = {:type => :killed}.merge(match_to_hash($~))
+                line = {:type => :killed}.merge(m_to_h($~))
               elsif DIED.match(l)
-                line = {:type => :died}.merge(match_to_hash($~))
+                line = {:type => :died}.merge(m_to_h($~))
               else
                 line = nil
               end
