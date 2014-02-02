@@ -15,24 +15,25 @@ module RMuh
           GUID = %r{#{TIME}.*Verified\sGUID\s\((?<player_guid>.*?)\).*#\d+?\s(?<player>.+)$}
           CHAT = %r{#{TIME}\((?<channel>Group|Global|Side|Vehicle|Command|Unknown)\)\s+?(?<player>.+?):\s(?<msg>.*)$}
 
-          def initialize(
-            include_chat = false,
-            to_zulu = true,
-            timezone = TZInfo::Timezone.get('America/Los_Angeles')
-          )
-            if to_zulu.class != TrueClass && to_zulu.class != FalseClass
+          def initialize(opts ={})
+            if !opts[:to_zulu].nil? && ![TrueClass, FalseClass].include?(opts[:to_zulu].class)
               raise ArgumentError,
-                    'arg 1 must be a boolean value (true|false)'
+                    ':to_zulu must be a boolean value (true|false)'
             end
 
-            if timezone.class != TZInfo::DataTimezone
+            if !opts[:timezone].nil? && opts[:timezone].class != TZInfo::DataTimezone
               raise ArgumentError,
-                    'arg 1 must be an instance of TZInfo::DataTimezone'
+                    ':tiemzone must be an instance of TZInfo::DataTimezone'
             end
 
-            @incldue_chat
-            @to_zulu = to_zulu
-            @timezone = timezone
+            if !opts[:chat].nil? && ![TrueClass, FalseClass].include?(opts[:chat].class)
+              raise ArgumentError,
+                    ':chat must be a boolean value (true|false)'
+            end
+
+            @incldue_chat = opts[:chat].nil? ? false : opts[:chat]
+            @to_zulu = opts[:to_zulu].nil? ? true : opts[:to_zulu]
+            @timezone = opts[:timezone].nil? ? TZInfo::Timezone.get('America/Los_Angeles') : opts[:timezone]
           end
 
           def parse(loglines)

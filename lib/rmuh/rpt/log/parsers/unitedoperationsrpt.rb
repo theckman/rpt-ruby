@@ -16,22 +16,20 @@ module RMuh
           WOUNDED = %r{^#{DTR}\s"(?<server_time>[0-9.]+).*?:\s(?<victim>.*?)\s\((?<victim_team>.*?)\)\s.*?by\s(?<offender>.*?)\s\((?<offender_team>.*?)\).*?(?<damage>[0-9.]+)\sdamage}
           ANNOUNCEMENT = %r{^#{DTR}\s"(?<head>[#]+?)\s(?<message>.*?)\s(?<tail>[#]+?)"}
 
-          def initialize(
-            to_zulu = true,
-            timezone = TZInfo::Timezone.get('America/Los_Angeles')
-          )
-            if to_zulu.class != TrueClass && to_zulu.class != FalseClass
+          def initialize(opts = {})
+
+            if !opts[:to_zulu].nil? && ![TrueClass, FalseClass].include?(opts[:to_zulu].class)
               raise ArgumentError,
-                    'arg 1 must be a boolean value (true|false)'
+                    ':to_zulu must be a boolean value (true|false)'
             end
 
-            if timezone.class != TZInfo::DataTimezone
+            if !opts[:timezone].nil? && opts[:timezone].class != TZInfo::DataTimezone
               raise ArgumentError,
-                    'arg 1 must be an instance of TZInfo::DataTimezone'
+                    ':tiemzone must be an instance of TZInfo::DataTimezone'
             end
 
-            @to_zulu = to_zulu
-            @timezone = timezone
+            @to_zulu = opts[:to_zulu].nil? ? true : opts[:to_zulu]
+            @timezone = [:timezone].nil? ? TZInfo::Timezone.get('America/Los_Angeles') : opts[:timezone]
           end
 
           def parse(loglines)
