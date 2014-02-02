@@ -1,4 +1,5 @@
 require 'rmuh/rpt/log/parsers/default'
+require 'digest'
 require 'tzinfo'
 
 module RMuh
@@ -6,14 +7,28 @@ module RMuh
     module Log
       module Parsers
         class UnitedOperations < RMuh::RPT::Log::Parsers::Default
-          SERVER_TZ = TZInfo::Timezone.get('America/Los_Angeles')
           DTR = '(?<year>\d+)/(?<month>\d+)/(?<day>\d+),\s+?(?<hour>\d+):(?<min>\d+):(?<sec>\d+)'
-          KILLED = %r{\A#{DTR}\s"(?<server_time>[0-9.]+).*?:\s(?<victim>.*?)\s\((?<victim_team>.*?)\)\s.*?by\s(?<offender>.*?)\s\((?<offender_team>.*?)\).*?position: \[(?<victim_position>.*?)\].*?GRID (?<victim_grid>\d+)\).*?position: \[(?<offender_position>.*?)\].*?GRID (?<offender_grid>\d*)\).*?:\s(?<distance>[0-9e.+]+).*?(?:(?<players_nearby>None|\[.*?\])")}
-          DIED = %r{\A#{DTR}\s"(?<server_time>[0-9.]+).*?:\s(?<victim>.*?) has died at \[(?<victim_position>.*?)\].*?GRID (?<victim_grid>\d+)\).*?(?:(?<nearby_players>None|\[.*?\])")}
-          WOUNDED = %r{\A#{DTR}\s"(?<server_time>[0-9.]+).*?:\s(?<victim>.*?)\s\((?<victim_team>.*?)\)\s.*?by\s(?<offender>.*?)\s\((?<offender_team>.*?)\).*?(?<damage>[0-9.]+)\sdamage}
-          ANNOUNCEMENT = %r{\A#{DTR}\s"(?<lead>[#]+?)\s(?<message>.*?)\s(?<tail>[#]+?)"}
+          KILLED = %r{^#{DTR}\s"(?<server_time>[0-9.]+).*?:\s(?<victim>.*?)\s\((?<victim_team>.*?)\)\s.*?by\s(?<offender>.*?)\s\((?<offender_team>.*?)\).*?position: \[(?<victim_position>.*?)\].*?GRID (?<victim_grid>\d+)\).*?position: \[(?<offender_position>.*?)\].*?GRID (?<offender_grid>\d*)\).*?:\s(?<distance>[0-9e.+]+).*?(?:(?<nearby_players>None|\[.*?\])")}
+          DIED = %r{^#{DTR}\s"(?<server_time>[0-9.]+).*?:\s(?<victim>.*?) has died at \[(?<victim_position>.*?)\].*?GRID (?<victim_grid>\d+)\).*?(?:(?<nearby_players>None|\[.*?\])")}
+          WOUNDED = %r{^#{DTR}\s"(?<server_time>[0-9.]+).*?:\s(?<victim>.*?)\s\((?<victim_team>.*?)\)\s.*?by\s(?<offender>.*?)\s\((?<offender_team>.*?)\).*?(?<damage>[0-9.]+)\sdamage}
+          ANNOUNCEMENT = %r{^#{DTR}\s"(?<head>[#]+?)\s(?<message>.*?)\s(?<tail>[#]+?)"}
 
-          def parse(loglines, convert_to_zulu = true)
+          def initialize(
+            to_zulu = true,
+            timezone = TZInfo::Timezone.get('America/Los_Angeles')
+          )
+            if to_zulu.class != TrueClass && to_zulu.class != FalseClass
+              raise ArgumentError, 'arg 1 must be a boolean value (true|false)'
+            end
+
+            if timezone.class != TZInfo::DataTimezone
+              raise ArgumentError, 'arg 1 must be an instance of TZInfo::DataTimezone'
+            end
+
+            @to_zulu = to_zulu
+            @timezone = timezone
+          end
+          def parse(loglines)
             raise ArgumentError, 'argument 1 must be a StringIO object' unless loglines.is_a? StringIO
 
             cleanlines = loglines.map do |l|
@@ -28,7 +43,9 @@ module RMuh
               else
                 line = nil
               end
-              zulu!(line) if convert_to_zulu and !line.nil?
+
+              zulu!(line) if @to_zulu and !line.nil?
+              add_guid!(line) unless line.nil?
             end.compact
           end
 
@@ -44,7 +61,8 @@ module RMuh
                 val = match[m].to_f
               elsif m.to_sym == :nearby_players
                 if match[m] != 'None'
-                  val = match[m].gsub('[', '').gsub(']', '').gsub('"', '').split(',')
+                  val = match[m].gsub('[', '').gsub(']', '').gsub('"', '')
+                  val = val.split(',')
                 end
               else
                 val = match[m]
@@ -55,12 +73,37 @@ module RMuh
           end
 
           def zulu!(line)
-            t = SERVER_TZ.local_to_utc(Time.new(line[:year], line[:month],
+            t = @timezone.local_to_utc(Time.new(line[:year], line[:month],
                                                 line[:day], line[:hour],
                                                 line[:min], line[:sec]))
+
             [:year, :month, :day, :hour, :min, :sec].each do |k|
               line[k] = t.send(k)
             end
+
+            line[:iso8601] = t.iso8601
+            line[:dtg] = t.strftime('%d%H%M %^b %y')
+            line[:dtg_proper] = line[:dtg].gsub('0', 'Ø')
+
+            line
+          end
+
+          def add_guid!(line)
+            if line[:iso8601].nil?
+              data = "#{line[:year]}#{line[:month]}#{line[:day]}" \
+                     "#{line[:hour]}#{line[:min]}#{line[:sec]}" \
+                     "#{line[:type].to_s}"
+            else
+              data = "#{line[:iso8601]}#{line[:type].to_s}"
+            end
+            data << line[:message] unless line[:message].nil?
+            data << line[:victim] unless line[:victim].nil?
+            data << line[:offender] unless line[:offender].nil?
+            data << line[:server_time].to_s unless line[:server_time].nil?
+            data << line[:damage].to_s unless line[:damage].nil?
+            data << line[:distance].to_s unless line[:distance].nil?
+
+            line[:event_guid] = Digest::SHA1.hexdigest data
             line
           end
         end
