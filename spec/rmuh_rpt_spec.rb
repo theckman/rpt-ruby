@@ -1,4 +1,5 @@
-require_relative '../lib/rmuh/rpt'
+require 'rspec'
+require File.join(File.expand_path('../..', __FILE__), 'lib/rmuh/rpt')
 
 describe RMuh::RPT do
   context RMuh::RPT::V_MAJ do

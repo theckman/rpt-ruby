@@ -1,5 +1,6 @@
+require 'rspec'
 require 'stringio'
-require_relative '../lib/rmuh/rpt/log/parsers/base'
+require File.join(File.expand_path('../..', __FILE__), 'lib/rmuh/rpt/log/parsers/base')
 
 describe RMuh::RPT::Log::Parsers::Base do
   let(:text) { StringIO.new("This is a string.\nSo is this!") }

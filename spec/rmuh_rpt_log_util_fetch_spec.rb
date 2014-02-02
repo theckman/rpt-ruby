@@ -1,3 +1,4 @@
+require 'rspec'
 require 'stringio'
 require File.join(File.expand_path('../..', __FILE__), 'lib/rmuh/rpt/log/fetch')
 
