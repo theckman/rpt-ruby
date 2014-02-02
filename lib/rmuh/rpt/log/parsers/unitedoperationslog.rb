@@ -35,6 +35,10 @@ module RMuh
           end
 
           def parse(loglines)
+            if !loglines.is_a?(StringIO)
+              raise ArgumentError, 'argument 1 must be a StringIO object'
+            end
+
             loglines.map do |l|
               if GUID.match(l)
                 line = {type: :guid}.merge(m_to_h($~))
