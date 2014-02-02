@@ -1,5 +1,6 @@
 require 'tzinfo'
-require 'rmuh/rpt/log/utils'
+require 'rmuh/rpt/log/util/unitedoperations'
+require 'rmuh/rpt/log/util/unitedoperationslog'
 require 'ap'
 
 module RMuh
@@ -7,13 +8,8 @@ module RMuh
     module Log
       module Parsers
         class UnitedOperationsLog < RMuh::RPT::Log::Parsers::Base
-          include RMuh::RPT::Log::Utils
-
-          ONE_DAY = 86400
-
-          TIME = '^\s*?(?<hour>\d+?):(?<min>\d+?):(?<sec>\d+)\sBattlEye\sServer:\s'
-          GUID = %r{#{TIME}.*Verified\sGUID\s\((?<player_guid>.*?)\).*#\d+?\s(?<player>.+)$}
-          CHAT = %r{#{TIME}\((?<channel>Group|Global|Side|Vehicle|Command|Unknown)\)\s+?(?<player>.+?):\s(?<msg>.*)$}
+          include RMuh::RPT::Log::Util::UnitedOperations
+          include RMuh::RPT::Log::Util::UnitedOperationsLog # Constants
 
           def initialize(opts ={})
             if !opts[:to_zulu].nil? && ![TrueClass, FalseClass].include?(opts[:to_zulu].class)
