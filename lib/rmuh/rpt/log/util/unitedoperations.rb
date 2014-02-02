@@ -7,6 +7,8 @@ module RMuh
       module Util
         module UnitedOperations
 
+          UO_TZ ||= TZInfo::Timezone.get('America/Los_Angeles')
+
           def m_to_h(match)
             h = {}
             match.names.each do |m|

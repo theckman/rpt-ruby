@@ -9,7 +9,7 @@ module RMuh
       module Parsers
         class UnitedOperationsLog < RMuh::RPT::Log::Parsers::Base
           include RMuh::RPT::Log::Util::UnitedOperations
-          include RMuh::RPT::Log::Util::UnitedOperationsLog # Constants
+          include RMuh::RPT::Log::Util::UnitedOperationsLog # Regexp Constants
 
           def initialize(opts ={})
             if !opts[:to_zulu].nil? && ![TrueClass, FalseClass].include?(opts[:to_zulu].class)
@@ -29,7 +29,7 @@ module RMuh
 
             @incldue_chat = opts[:chat].nil? ? false : opts[:chat]
             @to_zulu = opts[:to_zulu].nil? ? true : opts[:to_zulu]
-            @timezone = opts[:timezone].nil? ? TZInfo::Timezone.get('America/Los_Angeles') : opts[:timezone]
+            @timezone = opts[:timezone].nil? ? UO_TZ : opts[:timezone]
           end
 
           def parse(loglines)

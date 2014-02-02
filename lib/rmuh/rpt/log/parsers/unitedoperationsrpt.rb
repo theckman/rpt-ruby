@@ -10,7 +10,7 @@ module RMuh
       module Parsers
         class UnitedOperationsRPT < RMuh::RPT::Log::Parsers::Base
           include RMuh::RPT::Log::Util::UnitedOperations
-          include RMuh::RPT::Log::Util::UnitedOperationsRPT # Constants
+          include RMuh::RPT::Log::Util::UnitedOperationsRPT # Regexp Constants
 
           def initialize(opts = {})
 
@@ -25,7 +25,7 @@ module RMuh
             end
 
             @to_zulu = opts[:to_zulu].nil? ? true : opts[:to_zulu]
-            @timezone = [:timezone].nil? ? TZInfo::Timezone.get('America/Los_Angeles') : opts[:timezone]
+            @timezone = opts[:timezone].nil? ? UO_TZ : opts[:timezone]
           end
 
           def parse(loglines)
