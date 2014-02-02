@@ -1,8 +1,9 @@
+require 'stringio'
+require 'tzinfo'
+
 require 'rmuh/rpt/log/parsers/base'
 require 'rmuh/rpt/log/util/unitedoperations'
 require 'rmuh/rpt/log/util/unitedoperationsrpt'
-require 'digest'
-require 'tzinfo'
 
 module RMuh
   module RPT

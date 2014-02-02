@@ -1,4 +1,6 @@
 require 'tzinfo'
+require 'stringio'
+
 require 'rmuh/rpt/log/util/unitedoperations'
 require 'rmuh/rpt/log/util/unitedoperationslog'
 require 'ap'
