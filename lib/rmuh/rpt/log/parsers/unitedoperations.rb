@@ -82,8 +82,7 @@ module RMuh
             end
 
             line[:iso8601] = t.iso8601
-            line[:dtg] = t.strftime('%d%H%M %^b %y')
-            line[:dtg_proper] = line[:dtg].gsub('0', 'Ø')
+            line[:dtg] = t.strftime('%d%H%MZ %^b %y')
 
             line
           end
