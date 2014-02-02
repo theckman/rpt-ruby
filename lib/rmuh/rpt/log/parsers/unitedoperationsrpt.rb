@@ -34,7 +34,7 @@ module RMuh
               raise ArgumentError, 'argument 1 must be a StringIO object'
             end
 
-            cleanlines = loglines.map do |l|
+            loglines.map do |l|
               if ANNOUNCEMENT.match(l)
                 # $~ == $LAST_MATCH_INFO (last Regexp MatchData)
                 line = {:type => :announcement}.merge(m_to_h($~))
