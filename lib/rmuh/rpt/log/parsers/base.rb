@@ -2,7 +2,7 @@ module RMuh
   module RPT
     module Log
       module Parsers
-        class Default
+        class Base
           def initialize
 
           end
