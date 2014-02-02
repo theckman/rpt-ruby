@@ -6,11 +6,12 @@ module RMuh
   module RPT
     module Log
       module Parsers
-        TIME = '^\s*?(?<hour>\d+?):(?<min>\d+?):(?<sec>\d+)\sBattlEye\sServer:\s'
-        GUID = %r{#{TIME}.*Verified\sGUID\s\((?<player_guid>.*?)\).*#\d+?\s(?<player>.+)$}
-        CHAT = %r{#{TIME}\((?<channel>Group|Global|Side|Vehicle|Command|Unknown)\)\s+?(?<player>.+?):\s(?<msg>.*)$}
         class UnitedOperationsLog < RMuh::RPT::Log::Parsers::Base
           include RMuh::RPT::Log::Utils
+
+          TIME = '^\s*?(?<hour>\d+?):(?<min>\d+?):(?<sec>\d+)\sBattlEye\sServer:\s'
+          GUID = %r{#{TIME}.*Verified\sGUID\s\((?<player_guid>.*?)\).*#\d+?\s(?<player>.+)$}
+          CHAT = %r{#{TIME}\((?<channel>Group|Global|Side|Vehicle|Command|Unknown)\)\s+?(?<player>.+?):\s(?<msg>.*)$}
 
           def initialize(
             to_zulu = true,
