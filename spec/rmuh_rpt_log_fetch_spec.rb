@@ -1,10 +1,6 @@
 require 'rspec'
 require 'stringio'
-
-$LOAD_PATH << File.expand_path('..', __FILE__)
-
 require 'helpers/spec_helper'
-
 require File.join(repo_root, 'lib/rmuh/rpt/log/fetch')
 
 describe RMuh::RPT::Log::Fetch do
