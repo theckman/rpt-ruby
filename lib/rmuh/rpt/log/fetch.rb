@@ -37,7 +37,15 @@ module RMuh
         end
 
         def get_log
-          StringIO.new(self.class.get(@cfg.log_url, headers: { 'Range' => "bytes=#{@cfg.byte_start}-#{@cfg.byte_end}"}).lines.map { |l| l.gsub("\r", '') }.join)
+          headers = { 'Range' => "bytes=#{@cfg.byte_start}-#{@cfg.byte_end}" }
+          response = self.class.get(@cfg.log_url, headers: headers)
+          StringIO.new(response.lines.map { |l| dos2unix(l) }.join)
+        end
+
+        private 
+
+        def dos2unix(line)
+          line.gsub("\r\n", "\n")
         end
       end
     end
