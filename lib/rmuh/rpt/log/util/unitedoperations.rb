@@ -63,6 +63,30 @@ module RMuh
             line[:event_guid] = Digest::SHA1.hexdigest data
             line
           end
+
+          def validate_to_zulu(opts)
+            if !opts[:to_zulu].nil? &&
+               ![TrueClass, FalseClass].include?(opts[:to_zulu].class)
+              fail ArgumentError,
+                   ':to_zulu must be a boolean value (true|false)'
+            end
+          end
+
+          def validate_timezone(opts)
+            if !opts[:timezone].nil? &&
+               opts[:timezone].class != TZInfo::DataTimezone
+              fail ArgumentError,
+                   ':tiemzone must be an instance of TZInfo::DataTimezone'
+            end
+          end
+
+          def validate_chat(opts)
+            if !opts[:chat].nil? &&
+               ![TrueClass, FalseClass].include?(opts[:chat].class)
+              fail ArgumentError,
+                   ':chat must be a boolean value (true|false)'
+            end
+          end
         end
       end
     end

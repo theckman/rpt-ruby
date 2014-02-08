@@ -15,13 +15,17 @@ module RMuh
           include RMuh::RPT::Log::Util::UnitedOperationsLog # Regexp Constants
 
           def initialize(opts = {})
-            validate_to_zulu(opts)
-            validate_timezone(opts)
-            validate_chat(opts)
+            validate_opts(opts)
 
             @incldue_chat = opts[:chat].nil? ? false : opts[:chat]
             @to_zulu = opts[:to_zulu].nil? ? true : opts[:to_zulu]
             @timezone = opts[:timezone].nil? ? UO_TZ : opts[:timezone]
+          end
+
+          def validate_opts(opts)
+            validate_to_zulu(opts)
+            validate_timezone(opts)
+            validate_chat(opts)
           end
 
           def parse(loglines)
@@ -32,30 +36,6 @@ module RMuh
           end
 
           private
-
-          def validate_to_zulu(opts)
-            if !opts[:to_zulu].nil? &&
-               ![TrueClass, FalseClass].include?(opts[:to_zulu].class)
-              fail ArgumentError,
-                   ':to_zulu must be a boolean value (true|false)'
-            end
-          end
-
-          def validate_timezone(opts)
-            if !opts[:timezone].nil? &&
-               opts[:timezone].class != TZInfo::DataTimezone
-              fail ArgumentError,
-                   ':tiemzone must be an instance of TZInfo::DataTimezone'
-            end
-          end
-
-          def validate_chat(opts)
-            if !opts[:chat].nil? &&
-               ![TrueClass, FalseClass].include?(opts[:chat].class)
-              fail ArgumentError,
-                   ':chat must be a boolean value (true|false)'
-            end
-          end
 
           def regex_matches(loglines)
             loglines.map do |l|
