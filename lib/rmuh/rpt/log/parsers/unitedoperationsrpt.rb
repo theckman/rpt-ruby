@@ -2,7 +2,7 @@ require 'stringio'
 require 'tzinfo'
 
 require 'rmuh/rpt/log/parsers/base'
-require 'rmuh/rpt/log/util/unitedoperatireons'
+require 'rmuh/rpt/log/util/unitedoperations'
 require 'rmuh/rpt/log/util/unitedoperationsrpt'
 
 module RMuh
