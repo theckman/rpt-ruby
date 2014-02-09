@@ -36,6 +36,7 @@ module RMuh
               line = regex_match(l)
               zulu!(line, @timezone) if @to_zulu && !line.nil?
               add_guid!(line) unless line.nil?
+              line
             end.compact
           end
 
