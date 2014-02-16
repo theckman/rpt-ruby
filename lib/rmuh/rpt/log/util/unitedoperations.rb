@@ -126,14 +126,6 @@ module RMuh
                    ':tiemzone must be an instance of TZInfo::DataTimezone'
             end
           end
-
-          def validate_chat(opts)
-            if !opts[:chat].nil? &&
-               ![TrueClass, FalseClass].include?(opts[:chat].class)
-              fail ArgumentError,
-                   ':chat must be a boolean value (true|false)'
-            end
-          end
         end
       end
     end

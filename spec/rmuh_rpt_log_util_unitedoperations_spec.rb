@@ -478,46 +478,4 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
       end.to raise_error ArgumentError
     end
   end
-
-  context '#validate_chat' do
-    it 'should not take more than one arg' do
-      expect { @uo_util.validate_chat(nil, nil) }.to raise_error ArgumentError
-    end
-
-    it 'should not take less than one arg' do
-      expect { @uo_util.validate_chat }.to raise_error ArgumentError
-    end
-
-    it 'should return nil if arg 1 is true' do
-      @uo_util.validate_chat(chat: true).should be_nil
-    end
-
-    it 'should return nil if arg 1 is false' do
-      @uo_util.validate_chat(chat: false).should be_nil
-    end
-
-    it 'should raise ArgumentError if arg 1 is a String' do
-      expect { @uo_util.validate_chat(chat: '') }.to raise_error ArgumentError
-    end
-
-    it 'should raise ArgumentError if arg 1 is a Symbol' do
-      expect { @uo_util.validate_chat(chat: :x) }.to raise_error ArgumentError
-    end
-
-    it 'should raise ArgumentError if arg 1 is a Fixnum' do
-      expect { @uo_util.validate_chat(chat: 0) }.to raise_error ArgumentError
-    end
-
-    it 'should raise ArgumentError if arg 1 is a Float' do
-      expect { @uo_util.validate_chat(chat: 0.0) }.to raise_error ArgumentError
-    end
-
-    it 'should raise ArgumentError if arg 1 is an Array' do
-      expect { @uo_util.validate_chat(chat: []) }.to raise_error ArgumentError
-    end
-
-    it 'should raise ArgumentError if arg 1 is a Hash' do
-      expect { @uo_util.validate_chat(chat: {}) }.to raise_error ArgumentError
-    end
-  end
 end
