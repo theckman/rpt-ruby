@@ -12,22 +12,23 @@ module RMuh
         #
         class UnitedOperationsLog < RMuh::RPT::Log::Parsers::Base
           include RMuh::RPT::Log::Util::UnitedOperations
+          extend RMuh::RPT::Log::Util::UnitedOperations
           include RMuh::RPT::Log::Util::UnitedOperationsLog # Regexp Constants
 
-          def initialize(opts = {})
-            validate_opts(opts)
-            @include_chat = opts[:chat].nil? ? false : opts[:chat]
-            @to_zulu = opts[:to_zulu].nil? ? true : opts[:to_zulu]
-            @timezone = opts[:timezone].nil? ? UO_TZ : opts[:timezone]
-          end
-
-          def validate_opts(opts)
+          def self.validate_opts(opts)
             fail(
               ArgumentError, 'arg 1 should be an instance of Hash'
             ) unless opts.is_a?(Hash)
             validate_to_zulu(opts)
             validate_timezone(opts)
             validate_chat(opts)
+          end
+
+          def initialize(opts = {})
+            self.class.validate_opts(opts)
+            @include_chat = opts[:chat].nil? ? false : opts[:chat]
+            @to_zulu = opts[:to_zulu].nil? ? true : opts[:to_zulu]
+            @timezone = opts[:timezone].nil? ? UO_TZ : opts[:timezone]
           end
 
           def parse(loglines)
