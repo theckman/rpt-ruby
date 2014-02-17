@@ -22,6 +22,9 @@ module RMuh
           end
 
           def validate_opts(opts)
+            fail(
+              ArgumentError, 'arg 1 should be an instance of Hash'
+            ) unless opts.is_a?(Hash)
             validate_to_zulu(opts)
             validate_timezone(opts)
             validate_chat(opts)
