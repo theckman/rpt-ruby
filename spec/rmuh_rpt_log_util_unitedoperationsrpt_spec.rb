@@ -53,8 +53,8 @@ describe RMuh::RPT::Log::Util::UnitedOperationsRPT do
 
     it 'should match an example line' do
       l = '2014/02/16,  5:15:06 "3683.58 seconds: Appe96 has died at ' \
-      '[4602.18,7490.26,2.2435] (GRID 0460207490). Near players (100m): ' \
-      '["Olli","nametag47","Villanyi"]"'
+          '[4602.18,7490.26,2.2435] (GRID 0460207490). Near players (100m): ' \
+          '["Olli","nametag47","Villanyi"]"'
       m = RMuh::RPT::Log::Util::UnitedOperationsRPT::DIED.match(l)
       m.should_not be_nil
       m['year'].should eql '2014'
@@ -79,7 +79,7 @@ describe RMuh::RPT::Log::Util::UnitedOperationsRPT do
 
     it 'should match an example line' do
       l = '2014/02/16,  5:22:55 "4152.41 seconds: Sherminator (CIV) has ' \
-      'been team wounded by Xcenocide (WEST) for 1.50828 damage."'
+          'been team wounded by Xcenocide (WEST) for 1.50828 damage."'
       m = RMuh::RPT::Log::Util::UnitedOperationsRPT::WOUNDED.match(l)
       m.should_not be_nil
       m['year'].should eql '2014'
