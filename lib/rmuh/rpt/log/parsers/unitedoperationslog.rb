@@ -1,6 +1,7 @@
 require 'english'
 require 'tzinfo'
 require 'stringio'
+require 'rmuh/rpt/log/parsers/base'
 require 'rmuh/rpt/log/util/unitedoperations'
 require 'rmuh/rpt/log/util/unitedoperationslog'
 
@@ -12,8 +13,9 @@ module RMuh
         #
         class UnitedOperationsLog < RMuh::RPT::Log::Parsers::Base
           include RMuh::RPT::Log::Util::UnitedOperations
-          extend RMuh::RPT::Log::Util::UnitedOperations
           include RMuh::RPT::Log::Util::UnitedOperationsLog # Regexp Constants
+          extend RMuh::RPT::Log::Util::UnitedOperations
+          extend RMuh::RPT::Log::Util::UnitedOperationsLog
 
           def self.validate_opts(opts)
             fail(
