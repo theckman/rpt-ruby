@@ -1,6 +1,6 @@
 require 'stringio'
+require 'english'
 require 'tzinfo'
-
 require 'rmuh/rpt/log/parsers/base'
 require 'rmuh/rpt/log/util/unitedoperations'
 require 'rmuh/rpt/log/util/unitedoperationsrpt'
@@ -13,18 +13,21 @@ module RMuh
         #
         class UnitedOperationsRPT < RMuh::RPT::Log::Parsers::Base
           include RMuh::RPT::Log::Util::UnitedOperations
+          extend RMuh::RPT::Log::Util::UnitedOperations
           include RMuh::RPT::Log::Util::UnitedOperationsRPT # Regexp Constants
 
+          def self.validate_opts(opts)
+            fail ArgumentError,
+                 'argument 1 should be a Hash' unless opts.class == Hash
+            validate_to_zulu(opts)
+            validate_timezone(opts)
+          end
+
           def initialize(opts = {})
-            validate_opts(opts)
+            self.class.validate_opts(opts)
 
             @to_zulu = opts[:to_zulu].nil? ? true : opts[:to_zulu]
             @timezone = opts[:timezone].nil? ? UO_TZ : opts[:timezone]
-          end
-
-          def validate_opts(opts)
-            validate_to_zulu(opts)
-            validate_timezone(opts)
           end
 
           def parse(loglines)
