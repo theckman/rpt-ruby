@@ -7,10 +7,6 @@ describe RMuh::RPT::Log::Util::UnitedOperationsLog do
   before(:all) do
     @uo_util = Class.new
     @uo_util.extend(RMuh::RPT::Log::Util::UnitedOperationsLog)
-    @one_day = RMuh::RPT::Log::Util::UnitedOperationsLog::ONE_DAY
-    @time  = RMuh::RPT::Log::Util::UnitedOperationsLog::TIME
-    @guid = RMuh::RPT::Log::Util::UnitedOperationsLog::GUID
-    @chat = RMuh::RPT::Log::Util::UnitedOperationsLog::CHAT
   end
 
   context '::ONE_DAY' do
