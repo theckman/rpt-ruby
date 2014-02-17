@@ -1,6 +1,6 @@
+require 'english'
 require 'tzinfo'
 require 'stringio'
-
 require 'rmuh/rpt/log/util/unitedoperations'
 require 'rmuh/rpt/log/util/unitedoperationslog'
 
@@ -16,8 +16,7 @@ module RMuh
 
           def initialize(opts = {})
             validate_opts(opts)
-
-            @incldue_chat = opts[:chat].nil? ? false : opts[:chat]
+            @include_chat = opts[:chat].nil? ? false : opts[:chat]
             @to_zulu = opts[:to_zulu].nil? ? true : opts[:to_zulu]
             @timezone = opts[:timezone].nil? ? UO_TZ : opts[:timezone]
           end
@@ -30,7 +29,7 @@ module RMuh
 
           def parse(loglines)
             unless loglines.is_a?(StringIO)
-              fail ArgumentError, 'argument 1 must be a StringIO object'
+              fail ArgumentError, 'arg 1 must be a StringIO object'
             end
             regex_matches(loglines)
           end
@@ -41,18 +40,25 @@ module RMuh
             loglines.map do |l|
               line = nil
               if GUID.match(l)
-                line = { type: :guid }.merge(m_to_h($LAST_MATCH_INFO))
+                line = { type: :beguid }.merge(m_to_h($LAST_MATCH_INFO))
               elsif @include_chat && CHAT.match(l)
                 line = { type: :chat }.merge(m_to_h($LAST_MATCH_INFO))
               end
-              when_am_i!(line) unless line.nil?
+              line_modifiers(line) unless line.nil?
             end.compact
+          end
+
+          def line_modifiers(line)
+            when_am_i!(line)
+            zulu!(line, @timezone)
+            add_guid!(line)
+            line
           end
 
           def when_am_i!(line)
             case line[:hour]
             when 4..23
-              t = date_of_line_base_on_now
+              t = date_of_line_based_on_now
               set_line_date!(line, t)
             when 0..3
               set_line_date!(line)
