@@ -51,7 +51,7 @@ module RMuh
 
           def __parse_nearby_players(match, match_name)
             m = match_name
-            if match[m] != 'None'
+            if match[m] != 'None.'
               val = match[m].gsub('[', '').gsub(']', '').gsub('"', '')
               return val.split(',')
             else
