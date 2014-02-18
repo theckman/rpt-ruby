@@ -1,6 +1,5 @@
 # A sample Gemfile
 source 'https://rubygems.org'
-ruby '2.1.0'
 
 gem 'awesome_print', '~> 1.2.0'
 gem 'tzinfo', '~> 1.1.0'
