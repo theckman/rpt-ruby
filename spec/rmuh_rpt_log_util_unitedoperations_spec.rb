@@ -69,7 +69,6 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
 
     it 'should properly format the time in iso8601' do
       m = /^\d+-\d+-\d+T\d+:\d+:\d+Z$/
-      puts "zulu: #{zulued[:iso8601]}"
       m.match(zulued[:iso8601]).should be_an_instance_of MatchData
     end
 
