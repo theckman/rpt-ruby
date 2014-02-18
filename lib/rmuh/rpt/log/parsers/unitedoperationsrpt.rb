@@ -1,5 +1,5 @@
 require 'stringio'
-require 'english'
+require 'English'
 require 'tzinfo'
 require 'rmuh/rpt/log/parsers/base'
 require 'rmuh/rpt/log/util/unitedoperations'

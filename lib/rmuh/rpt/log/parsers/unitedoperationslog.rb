@@ -1,4 +1,4 @@
-require 'english'
+require 'English'
 require 'tzinfo'
 require 'stringio'
 require 'rmuh/rpt/log/parsers/base'
