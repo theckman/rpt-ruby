@@ -42,7 +42,8 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     let(:uo_tz) { RMuh::RPT::Log::Util::UnitedOperations::UO_TZ }
     let(:good_time) do
       utc = TZInfo::Timezone.get('Etc/UTC')
-      utc.local_to_utc(Time.new(2014, 01, 01, 00, 00, 00)).iso8601
+      t = utc.local_to_utc(Time.new(2014, 01, 01, 00, 00, 00))
+      t.strftime('%Y-%m-%dT%H:%M:%SZ')
     end
     let(:zulued) do
       ml = @uo_util.m_to_h(@mi.match('2013/12/31 16:00:00'))
