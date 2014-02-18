@@ -72,13 +72,12 @@ module RMuh
             line
           end
 
-          def date_of_line_based_on_now
-            if Time.now.hour.between?(4, 23)
-              t = @timezone.now
+          def date_of_line_based_on_now(time = Time.now)
+            if time.hour.between?(4, 23)
+              @timezone.now
             else
-              t = @timezone.now - ONE_DAY
+              @timezone.now - ONE_DAY
             end
-            t
           end
 
           def set_line_date!(line, time = @timezone.now)
