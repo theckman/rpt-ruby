@@ -4,7 +4,7 @@ require 'ostruct'
 module RMuh
   module RPT
     module Log
-      # TODO: Class documentation
+      # TODO: Fetch Class documentation
       #
       class Fetch
         include HTTParty

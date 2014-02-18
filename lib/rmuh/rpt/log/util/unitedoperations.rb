@@ -5,7 +5,7 @@ module RMuh
   module RPT
     module Log
       module Util
-        # Something
+        # TODO: Module documentation
         #
         module UnitedOperations
           UO_TZ ||= TZInfo::Timezone.get('America/Los_Angeles')

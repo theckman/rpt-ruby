@@ -13,8 +13,8 @@ module RMuh
         #
         class UnitedOperationsLog < RMuh::RPT::Log::Parsers::Base
           include RMuh::RPT::Log::Util::UnitedOperations
-          include RMuh::RPT::Log::Util::UnitedOperationsLog # Regexp Constants
           extend RMuh::RPT::Log::Util::UnitedOperations
+          include RMuh::RPT::Log::Util::UnitedOperationsLog # Regexp Constants
           extend RMuh::RPT::Log::Util::UnitedOperationsLog
 
           def self.validate_opts(opts)
