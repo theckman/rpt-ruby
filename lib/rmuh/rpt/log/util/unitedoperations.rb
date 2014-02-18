@@ -68,7 +68,7 @@ module RMuh
               line[k] = t.send(k)
             end
 
-            line[:iso8601] = t.iso8601
+            line[:iso8601] = t.strftime('%Y-%m-%dT%H:%M:%SZ')
             line[:dtg] = t.strftime('%d%H%MZ %^b %y')
 
             line
