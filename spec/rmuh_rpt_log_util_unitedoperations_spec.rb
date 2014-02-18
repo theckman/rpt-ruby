@@ -16,7 +16,7 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     @mf = Regexp.new(
       '(?<server_time>[0-9.]+)\s(?<damage>[0-9.]+)\s(?<distance>[0-9.]+)'
     )
-    @ma = /(?:(?<nearby_players>None|\[.*?\])")/
+    @ma = /(?:(?<nearby_players>None.|\[.*?\])")/
     @full_line = {
       year: 2014, month: 1, day: 1, hour: 0, min: 0, sec: 0, type: :killed,
       victim: 'Player1', offender: 'Player2', server_time: 2042.0,
@@ -362,7 +362,7 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     end
 
     it 'should convert nearby players to an empty Array if it is None' do
-      md = @ma.match('None"')
+      md = @ma.match('None."')
       h = @uo_util.m_to_h(md)
       h[:nearby_players].should be_an_instance_of Array
       h[:nearby_players].empty?.should be_true

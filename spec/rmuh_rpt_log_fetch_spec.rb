@@ -72,23 +72,23 @@ describe RMuh::RPT::Log::Fetch do
     end
   end
 
-  context '#get_size' do
+  context '#size' do
     it 'should return a Integer object' do
-      fetch.get_size.should be_an_instance_of Fixnum
+      fetch.size.should be_an_instance_of Fixnum
     end
 
     it 'should return the size' do
-      fetch.get_size.should eql 10
+      fetch.size.should eql 10
     end
   end
 
-  context '#get_log' do
+  context '#log' do
     it 'should return a StringIO object' do
-      fetch.get_log.should be_an_instance_of StringIO
+      fetch.log.should be_an_instance_of StringIO
     end
 
     it 'should return the log' do
-      fetch.get_log.read.should eql 'RSpec, yo.'
+      fetch.log.read.should eql 'RSpec, yo.'
     end
   end
 
