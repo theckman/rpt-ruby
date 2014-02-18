@@ -16,6 +16,12 @@ describe RMuh::RPT::Log::Parsers::Base do
   end
 
   context '#new' do
+    it 'should take no more than one arg' do
+      expect do
+        RMuh::RPT::Log::Parsers::Base.new(nil, nil)
+      end.to raise_error ArgumentError
+    end
+
     it 'should return an instance of RMuh::RPT::Log::Parsers::Base' do
       base.should be_an_instance_of RMuh::RPT::Log::Parsers::Base
     end

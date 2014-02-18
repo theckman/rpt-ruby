@@ -2,10 +2,14 @@ module RMuh
   module RPT
     module Log
       module Parsers
-        # TODO: Base Class documentation
+        # This is the base RPT parser class. This does nothing but
+        # return each line as a Hash within an Array. There is no
+        # metadata extracted, it's a literal copy and paste of the
+        # provided log line. This class is primarily used as an example
+        # class to be used for subclassing of your own parser
         #
         class Base
-          def initialize
+          def initialize(opts = {})
           end
 
           def parse(loglines)
