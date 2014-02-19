@@ -134,8 +134,7 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     it 'should be message + victim + offender + server_time + damage' do
       x = @uo_util.__guid_data_one(@full_line)
       s = "#{@full_line[:message].to_s}#{@full_line[:victim].to_s}" \
-          "#{@full_line[:offender].to_s}#{@full_line[:server_time].to_s}" \
-          "#{@full_line[:damage].to_s}"
+          "#{@full_line[:offender].to_s}"
       x.should eql s
     end
   end
@@ -157,8 +156,31 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
 
     it 'should be distance + player + player_beguid + channel' do
       x = @uo_util.__guid_data_two(@full_line)
-      s = "#{@full_line[:distance].to_s}#{@full_line[:player]}" \
-          "#{@full_line[:player_beguid]}#{@full_line[:channel]}"
+      s = "#{@full_line[:server_time].to_s}#{@full_line[:damage].to_s}" \
+          "#{@full_line[:distance].to_s}"
+      x.should eql s
+    end
+  end
+
+  context '#__guid_data_three' do
+    it 'should not take more than one arg' do
+      expect do
+        @uo_util.__guid_data_three(nil, nil)
+      end.to raise_error ArgumentError
+    end
+
+    it 'should not take less than one arg' do
+      expect { @uo_util.__guid_data_three }.to raise_error ArgumentError
+    end
+
+    it 'should return a String' do
+      @uo_util.__guid_data_three(@full_line).should be_an_instance_of String
+    end
+
+    it 'should be distance + player + player_beguid + channel' do
+      x = @uo_util.__guid_data_three(@full_line)
+      s = "#{@full_line[:player]}#{@full_line[:player_beguid]}" \
+          "#{@full_line[:channel]}"
       x.should eql s
     end
   end
