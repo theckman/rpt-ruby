@@ -1,6 +1,6 @@
 RMuh
 ====
-[![Build Status](https://img.shields.io/travis/theckman/rmuh.svg)](https://travis-ci.org/theckman/rpt-ruby)
+[![Build Status](https://img.shields.io/travis/theckman/rmuh/master.svg)](https://travis-ci.org/theckman/rpt-ruby)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://tldrlegal.com/license/mit-license)
 
 **RMuh**, a play on the name ArmA (Armed Assault), is a Ruby library for
