@@ -4,7 +4,10 @@ require 'helpers/spec_helper'
 require File.join(repo_root, 'lib/rmuh/rpt/log/fetch')
 
 describe RMuh::RPT::Log::Fetch do
-  let(:url) { 'http://www.mocky.io/v2/52ba9604dd10514d0084ef05' }
+  let(:url) do
+    'https://raw2.github.com/theckman/rmuh/master/spec/files/content-length.' \
+    'txt'
+  end
   let(:fetch) { RMuh::RPT::Log::Fetch.new(url) }
   context '#new' do
     it 'should return an instance of RMuh::RPT::Log::Fetch' do
@@ -88,7 +91,7 @@ describe RMuh::RPT::Log::Fetch do
     end
 
     it 'should return the log' do
-      fetch.log.read.should eql 'RSpec, yo.'
+      fetch.log.read.should eql "RSpec, yo\n"
     end
   end
 
