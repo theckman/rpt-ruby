@@ -21,6 +21,8 @@ Gem::Specification.new do |g|
   g.add_development_dependency 'rake', '~>10.1.0'
   g.add_development_dependency 'rspec', '~>2.14.1'
   g.add_development_dependency 'fuubar', '~> 1.3.2'
+  g.add_development_dependency 'simplecov', '~> 0.8.2'
+  g.add_development_dependency 'coveralls', '~> 0.7.0'
 
   g.add_runtime_dependency 'awesome_print', '~> 1.2.0'
   g.add_runtime_dependency 'tzinfo', '~> 1.1.0'
