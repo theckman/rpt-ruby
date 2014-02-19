@@ -76,11 +76,16 @@ module RMuh
 
           def add_guid!(line)
             data = __guid_data_base(line)
-            data << __guid_data_one(line)
-            data << __guid_data_two(line)
-            data << __guid_data_three(line)
-            line[:event_guid] = Digest::SHA1.hexdigest data
+            s = guid_keys.map { |k| __guid_add_data(line, k) }
+            line[:event_guid] = Digest::SHA1.hexdigest data + s.join('')
             line
+          end
+
+          def guid_keys
+            [
+              :message, :victim, :offender, :server_time, :damage,
+              :distance, :player, :player_beguid, :channel
+            ]
           end
 
           def __guid_data_base(line)
@@ -93,27 +98,9 @@ module RMuh
             end
           end
 
-          def __guid_data_one(line)
+          def __guid_add_data(line, key)
             data = ''
-            data << line[:message] unless line[:message].nil?
-            data << line[:victim] unless line[:victim].nil?
-            data << line[:offender] unless line[:offender].nil?
-            data
-          end
-
-          def __guid_data_two(line)
-            data = ''
-            data << line[:server_time].to_s unless line[:server_time].nil?
-            data << line[:damage].to_s unless line[:damage].nil?
-            data << line[:distance].to_s unless line[:distance].nil?
-            data
-          end
-
-          def __guid_data_three(line)
-            data = ''
-            data << line[:player] unless line[:player].nil?
-            data << line[:player_beguid] unless line[:player_beguid].nil?
-            data << line[:channel] unless line[:channel].nil?
+            data << line[key].to_s unless line[key].nil?
             data
           end
 

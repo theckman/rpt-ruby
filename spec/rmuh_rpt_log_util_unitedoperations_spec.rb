@@ -116,72 +116,32 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     end
   end
 
-  context '#__guid_data_one' do
-    it 'should not take more than one arg' do
+  context '#__guid_add_data' do
+    it 'should not take more than two args' do
       expect do
-        @uo_util.__guid_data_one(nil, nil)
+        @uo_util.__guid_add_data(nil, nil, nil)
       end.to raise_error ArgumentError
     end
 
-    it 'should not take less than one arg' do
-      expect { @uo_util.__guid_data_one }.to raise_error ArgumentError
-    end
-
-    it 'should return a String' do
-      @uo_util.__guid_data_one(@full_line).should be_an_instance_of String
-    end
-
-    it 'should be message + victim + offender + server_time + damage' do
-      x = @uo_util.__guid_data_one(@full_line)
-      s = "#{@full_line[:message].to_s}#{@full_line[:victim].to_s}" \
-          "#{@full_line[:offender].to_s}"
-      x.should eql s
-    end
-  end
-
-  context '#__guid_data_two' do
-    it 'should not take more than one arg' do
+    it 'should not take less than two args' do
       expect do
-        @uo_util.__guid_data_two(nil, nil)
+        @uo_util.__guid_add_data(nil)
       end.to raise_error ArgumentError
     end
 
-    it 'should not take less than one arg' do
-      expect { @uo_util.__guid_data_two }.to raise_error ArgumentError
-    end
-
     it 'should return a String' do
-      @uo_util.__guid_data_two(@full_line).should be_an_instance_of String
+      l = {}
+      @uo_util.__guid_add_data(l, :year).should be_an_instance_of String
     end
 
-    it 'should be distance + player + player_beguid + channel' do
-      x = @uo_util.__guid_data_two(@full_line)
-      s = "#{@full_line[:server_time].to_s}#{@full_line[:damage].to_s}" \
-          "#{@full_line[:distance].to_s}"
-      x.should eql s
-    end
-  end
-
-  context '#__guid_data_three' do
-    it 'should not take more than one arg' do
-      expect do
-        @uo_util.__guid_data_three(nil, nil)
-      end.to raise_error ArgumentError
+    it 'should return the key you requested by as a String' do
+      l = { year: 2014 }
+      @uo_util.__guid_add_data(l, :year).should eql '2014'
     end
 
-    it 'should not take less than one arg' do
-      expect { @uo_util.__guid_data_three }.to raise_error ArgumentError
-    end
-
-    it 'should return a String' do
-      @uo_util.__guid_data_three(@full_line).should be_an_instance_of String
-    end
-
-    it 'should be distance + player + player_beguid + channel' do
-      x = @uo_util.__guid_data_three(@full_line)
-      s = "#{@full_line[:player]}#{@full_line[:player_beguid]}" \
-          "#{@full_line[:channel]}"
-      x.should eql s
+    it 'should return an empty String if the key does not exist' do
+      l = { year: 2014 }
+      @uo_util.__guid_add_data(l, :month).should eql ''
     end
   end
 
