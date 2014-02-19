@@ -3,6 +3,7 @@ RMuh
 [![Build Status](https://img.shields.io/travis/theckman/rmuh/master.svg)](https://travis-ci.org/theckman/rpt-ruby)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://tldrlegal.com/license/mit-license)
 [![Coveralls Coverage](https://img.shields.io/coveralls/theckman/rmuh/master.svg)](https://coveralls.io/r/theckman/rmuh)
+[![Code Climate](https://img.shields.io/codeclimate/github/theckman/rmuh.svg)](https://codeclimate.com/github/theckman/rmuh)
 
 **RMuh**, a play on the name ArmA (Armed Assault), is a Ruby library for
 interacting with ArmA 2 servers (specifically tested against Operation
