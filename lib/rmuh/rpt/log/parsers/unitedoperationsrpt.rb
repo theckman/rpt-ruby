@@ -19,7 +19,7 @@ module RMuh
           def self.validate_opts(opts)
             fail ArgumentError,
                  'argument 1 should be a Hash' unless opts.class == Hash
-            validate_to_zulu(opts)
+            validate_bool_opt(opts, :to_zulu)
             validate_timezone(opts)
           end
 

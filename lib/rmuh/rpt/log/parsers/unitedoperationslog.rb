@@ -21,9 +21,9 @@ module RMuh
             fail(
               ArgumentError, 'arg 1 should be an instance of Hash'
             ) unless opts.is_a?(Hash)
-            validate_to_zulu(opts)
+            validate_bool_opt(opts, :to_zulu)
             validate_timezone(opts)
-            validate_chat(opts)
+            validate_bool_opt(opts, :chat)
           end
 
           def initialize(opts = {})

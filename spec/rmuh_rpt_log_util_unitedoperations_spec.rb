@@ -370,58 +370,67 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     end
   end
 
-  context '#validate_to_zulu' do
-    it 'should not take more than one arg' do
+  context '#validate_bool_opt' do
+    it 'should not take more than two args' do
       expect do
-        @uo_util.validate_to_zulu(nil, nil)
+        @uo_util.validate_bool_opt(nil, nil, nil)
       end.to raise_error ArgumentError
     end
 
-    it 'should not take less than one arg' do
-      expect { @uo_util.validate_to_zulu }.to raise_error ArgumentError
-    end
-
-    it 'should return nil if arg 1 is true' do
-      @uo_util.validate_to_zulu(to_zulu: true).should be_nil
-    end
-
-    it 'should return nil if arg 1 is false' do
-      @uo_util.validate_to_zulu(to_zulu: false).should be_nil
-    end
-
-    it 'should raise ArgumentError if arg 1 is a String' do
+    it 'should not take less than two args' do
       expect do
-        @uo_util.validate_to_zulu(to_zulu: '')
+        @uo_util.validate_bool_opt(nil)
       end.to raise_error ArgumentError
     end
 
-    it 'should raise ArgumentError if arg 1 is a Symbol' do
+    it 'should return nil if the key does not exist' do
+      h = { one: 'two' }
+      @uo_util.validate_bool_opt(h, :two).should be_nil
+    end
+
+    it 'should return nil if the key is true' do
+      h = { x: true }
+      @uo_util.validate_bool_opt(h, :x).should be_nil
+    end
+
+    it 'should return nil if the key is false' do
+      h = { x: false }
+      @uo_util.validate_bool_opt(h, :x).should be_nil
+    end
+
+    it 'should raise ArgumentError if the key is a String' do
       expect do
-        @uo_util.validate_to_zulu(to_zulu: :x)
+        @uo_util.validate_bool_opt({ x: '' }, :x)
       end.to raise_error ArgumentError
     end
 
-    it 'should raise ArgumentError if arg 1 is a Fixnum' do
+    it 'should raise ArgumentError if the key is a Symbol' do
       expect do
-        @uo_util.validate_to_zulu(to_zulu: 0)
+        @uo_util.validate_bool_opt({ x: :x }, :x)
       end.to raise_error ArgumentError
     end
 
-    it 'should raise ArgumentError if arg 1 is a Float' do
+    it 'should raise ArgumentError if the key is a Fixnum' do
       expect do
-        @uo_util.validate_to_zulu(to_zulu: 0.0)
+        @uo_util.validate_bool_opt({ x: 0 }, :x)
       end.to raise_error ArgumentError
     end
 
-    it 'should raise ArgumentError if arg 1 is an Array' do
+    it 'should raise ArgumentError if the key is a Float' do
       expect do
-        @uo_util.validate_to_zulu(to_zulu: [])
+        @uo_util.validate_bool_opt({ x: 0.0 }, :x)
       end.to raise_error ArgumentError
     end
 
-    it 'should raise ArgumentError if arg 1 is a Hash' do
+    it 'should raise ArgumentError if the key is a Array' do
       expect do
-        @uo_util.validate_to_zulu(to_zulu: {})
+        @uo_util.validate_bool_opt({ x: [] }, :x)
+      end.to raise_error ArgumentError
+    end
+
+    it 'should raise ArgumentError if the key is a Hash' do
+      expect do
+        @uo_util.validate_bool_opt({ x: '' }, :x)
       end.to raise_error ArgumentError
     end
   end
