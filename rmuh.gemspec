@@ -19,15 +19,15 @@ Gem::Specification.new do |g|
   g.test_files  = %x{git ls-files spec/*}.split
   g.files       = %x{git ls-files}.split
 
-  g.add_development_dependency 'rake', '~>10.1.0'
-  g.add_development_dependency 'rspec', '~>2.14.1'
-  g.add_development_dependency 'rubocop', '~> 0.18.1'
-  g.add_development_dependency 'fuubar', '~> 1.3.2'
-  g.add_development_dependency 'simplecov', '~> 0.8.2'
-  g.add_development_dependency 'coveralls', '~> 0.7.0'
+  g.add_development_dependency 'rake', '~>10.1', '>= 10.1.0'
+  g.add_development_dependency 'rspec', '~>2.14', '>= 2.14.1'
+  g.add_development_dependency 'rubocop', '~> 0.18', '=> 0.18.1'
+  g.add_development_dependency 'fuubar', '~> 1.3', '>= 1.3.2'
+  g.add_development_dependency 'simplecov', '~> 0.8', '>= 0.8.2'
+  g.add_development_dependency 'coveralls', '~> 0.7', '>= 0.7.0'
+  g.add_development_dependency 'awesome_print', '~> 1.2', '>= 1.2.0'
 
-  g.add_runtime_dependency 'awesome_print', '~> 1.2.0'
-  g.add_runtime_dependency 'tzinfo', '~> 1.1.0'
-  g.add_runtime_dependency 'httparty', '~> 0.12.0'
-  g.add_runtime_dependency 'gamespy_query', '~> 0.1.5'
+  g.add_runtime_dependency 'tzinfo', '~> 1.1', '>= 1.1.0'
+  g.add_runtime_dependency 'httparty', '~> 0.12', '>= 0.12.0'
+  g.add_runtime_dependency 'gamespy_query', '~> 0.1', '>= 0.1.5'
 end
