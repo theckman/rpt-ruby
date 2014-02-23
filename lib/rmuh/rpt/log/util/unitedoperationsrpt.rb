@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 module RMuh
   module RPT
     module Log

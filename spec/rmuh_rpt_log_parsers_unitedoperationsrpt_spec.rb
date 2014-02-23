@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 require 'stringio'
 require 'rspec'
 require 'helpers/spec_helper'
