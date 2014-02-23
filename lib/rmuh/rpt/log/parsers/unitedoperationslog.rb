@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 require 'English'
 require 'tzinfo'
 require 'stringio'

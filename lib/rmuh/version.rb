@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # RMuh : the ArmA 2 Ruby library
 #
 module RMuh

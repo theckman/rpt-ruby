@@ -1,4 +1,4 @@
-# A sample Gemfile
+# -*- coding: UTF-8 -*-
 source 'https://rubygems.org'
 
 gemspec

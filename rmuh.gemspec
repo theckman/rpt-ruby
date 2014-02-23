@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 require 'English'
 
 $LOAD_PATH << File.expand_path('../lib', __FILE__)
