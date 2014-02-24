@@ -8,8 +8,8 @@ module RMuh
     #
     class OperationArrowhead < RMuh::ServerStats::Base
       def method_missing(method, *args, &block)
-        m = /(.*)/.match(method)[0]
-        stats[m]
+        super unless stats.key?(method)
+        stats[method]
       end
     end
   end
