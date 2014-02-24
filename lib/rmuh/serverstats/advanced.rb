@@ -6,7 +6,7 @@ module RMuh
   module ServerStats
     # TODO: Documentation
     #
-    class OperationArrowhead < RMuh::ServerStats::Base
+    class Advanced < RMuh::ServerStats::Base
       def method_missing(method, *args, &block)
         super unless stats.key?(method)
         stats[method]
