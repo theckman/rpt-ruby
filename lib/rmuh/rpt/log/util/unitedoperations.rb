@@ -6,7 +6,8 @@ module RMuh
   module RPT
     module Log
       module Util
-        # TODO: Module documentation
+        # UnitedOperations module. This has a constant and some shared
+        # functions. This is shared amongst the two UO logs
         #
         module UnitedOperations
           UO_TZ ||= TZInfo::Timezone.get('America/Los_Angeles')

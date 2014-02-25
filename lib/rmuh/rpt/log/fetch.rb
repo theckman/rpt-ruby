@@ -5,12 +5,19 @@ require 'ostruct'
 module RMuh
   module RPT
     module Log
-      # TODO: Fetch Class documentation
+      # This is the RPT Log fetcher class. It allows fetching a specific URL,
+      # only pulling a specific byte range, as well as getting the size of the
+      # external file
       #
       class Fetch
         include HTTParty
         attr_accessor :cfg
 
+        # New class. Required param (#1) log_url, optional second
+        # and third options are byte_start and byte_end
+        # --
+        # TODO: Make these latter options Hash options
+        # ++
         def initialize(log_url, byte_start = 0, byte_end = nil)
           @cfg = OpenStruct.new(
             log_url: log_url,

@@ -3,10 +3,19 @@
 require 'gamespy_query'
 
 module RMuh
-  # TODO: Documentation
+  # This is the namespace for the Gamespy Query Server Statistics.
+  # It has no methods.
   #
   module ServerStats
-    # TODO: Documentation
+    # This is the Base server stats class. It wraps GamespyQuery::Socket and
+    # adds a simpler interface for the usage of querying the server.
+    #
+    # The required parameter within the Hash is ':host'. Optional params are:
+    # port and cache
+    #
+    # * port: the GamespyQuery port of the server (usually game port)
+    # * cache: whether the data will cache on request, or pull new data each
+    #          stats request
     #
     class Base
       DEFAULT_PORT = 2_302
