@@ -15,18 +15,18 @@ describe RMuh::RPT::Log::Fetch do
       fetch.should be_an_instance_of RMuh::RPT::Log::Fetch
     end
 
-    it 'should have a @cfg object which is an instance of OpenStruct' do
-      fetch.cfg.should be_an_instance_of OpenStruct
+    it 'should have a @log_url object which is an instance of String' do
+      fetch.log_url.should be_an_instance_of String
     end
 
-    it 'should set the "byte_start" config item if specified as arg:1' do
-      rlfetch = RMuh::RPT::Log::Fetch.new(url, 10)
-      rlfetch.cfg.byte_start.should eql 10
+    it 'should set the "byte_start" config item if specified' do
+      rlfetch = RMuh::RPT::Log::Fetch.new(url, byte_start: 10)
+      rlfetch.byte_start.should eql 10
     end
 
-    it 'should set the "byte_end" config item if specified as arg:3' do
-      rlfetch = RMuh::RPT::Log::Fetch.new(url, 10, 42)
-      rlfetch.cfg.byte_end.should eql 42
+    it 'should set the "byte_end" config item if specified' do
+      rlfetch = RMuh::RPT::Log::Fetch.new(url, byte_end: 42)
+      rlfetch.byte_end.should eql 42
     end
   end
 
@@ -49,7 +49,7 @@ describe RMuh::RPT::Log::Fetch do
 
     it 'should update the @cfg.byte_start value' do
       fetch.byte_start = 10
-      fetch.cfg.byte_start.should eql 10
+      fetch.byte_start.should eql 10
     end
   end
 
@@ -72,7 +72,7 @@ describe RMuh::RPT::Log::Fetch do
 
     it 'should update the @cfg.byte_end value' do
       fetch.byte_end = 42
-      fetch.cfg.byte_end.should eql 42
+      fetch.byte_end.should eql 42
     end
   end
 

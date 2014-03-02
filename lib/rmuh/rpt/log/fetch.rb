@@ -11,44 +11,48 @@ module RMuh
       #
       class Fetch
         include HTTParty
-        attr_accessor :cfg
+        attr_accessor :log_url, :byte_start, :byte_end
 
-        # New class. Required param (#1) log_url, optional second
-        # and third options are byte_start and byte_end
-        # --
-        # TODO: Make these latter options Hash options
-        # ++
-        def initialize(log_url, byte_start = 0, byte_end = nil)
-          @cfg = OpenStruct.new(
-            log_url: log_url,
-            byte_start: byte_start,
-            byte_end: byte_end
-          )
+        def self.validate_opts(opts)
+          if opts.key?(:byte_start) &&
+             (!opts[:byte_start].is_a?(Fixnum) || opts[:byte_start] < 0)
+            fail(ArgumentError, ':byte_start must be a Fixnum >= 0')
+          end
+          if opts.key?(:byte_end) &&
+             ![Fixnum, NilClass].include?(opts[:byte_end].class)
+            fail(ArgumentError, ':byte_end must be nil or Fixnum')
+          end
+        end
+
+        # New Fetch class. This is used for fetching the ArmA 2 log files
+        # Required param (#1): (String) The log file URL
+        # Optional param (#2): (Hash):
+        # * :byte_start - what byte to start the log file from
+        # * :byte_end - the last byte that we want from the log file
+        #
+        def initialize(log_url, opts = {})
+          @log_url = log_url
+          @byte_start = opts.key?(:byte_start) ? opts[:byte_start] : 0
+          @byte_end = opts.key?(:byte_end) ? opts[:byte_end] : nil
         end
 
         def byte_start=(bytes)
-          if bytes.is_a?(Integer)
-            @cfg.byte_start = bytes
-          else
-            fail ArgumentError, 'argument 1 must be an integer'
-          end
+          self.class.validate_opts(byte_start: bytes)
+          @byte_start = bytes
         end
 
         def byte_end=(bytes)
-          if bytes.nil? || bytes.is_a?(Integer)
-            @cfg.byte_end = bytes
-          else
-            fail ArgumentError, 'argument 1 must be nil or an integer'
-          end
+          self.class.validate_opts(byte_end: bytes)
+          @byte_end = bytes
         end
 
         def size
-          self.class.head(@cfg.log_url).headers['content-length'].to_i
+          self.class.head(@log_url).headers['content-length'].to_i
         end
 
         def log
-          headers = { 'Range' => "bytes=#{@cfg.byte_start}-#{@cfg.byte_end}" }
-          response = self.class.get(@cfg.log_url, headers: headers)
+          headers = { 'Range' => "bytes=#{@byte_start}-#{@byte_end}" }
+          response = self.class.get(@log_url, headers: headers)
           StringIO.new(response.lines.map { |l| dos2unix(l) }.join)
         end
 
