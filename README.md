@@ -29,7 +29,7 @@ INSTALLATION
 This is packaged on the [RubyGems](https://rubygems.org/) site and can be
 installed via the `gem` command:
 
-```Ruby
+```Bash
 $ gem install rmuh
 ```
 
