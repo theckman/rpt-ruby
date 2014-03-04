@@ -16,11 +16,9 @@ module RMuh
           def parse(loglines)
             fail(
               ArgumentError, 'argument 1 must be a StringIO object'
-            ) unless loglines.is_a? StringIO
+            ) unless loglines.is_a?(StringIO)
 
-            loglines.map do |line|
-              { type: :log, message: line }
-            end
+            loglines.map { |line| { type: :log, message: line } }
           end
         end
       end

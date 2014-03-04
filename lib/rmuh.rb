@@ -20,3 +20,8 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
+path = File.expand_path('../rmuh', __FILE__)
+require File.join(path, 'rpt')
+require File.join(path, 'serverstats/base')
+require File.join(path, 'serverstats/advanced')
