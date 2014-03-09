@@ -24,8 +24,9 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
     end
 
     it 'should return nil if arg 1 is a Hash' do
-      RMuh::RPT::Log::Parsers::UnitedOperationsLog.validate_opts({})
-        .should be_nil
+      expect(
+        RMuh::RPT::Log::Parsers::UnitedOperationsLog.validate_opts({})
+      ).to be_nil
     end
 
     it 'should fail if to_zulu is not boolean' do
@@ -63,49 +64,50 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
 
     it 'should return an instance of UnitedOperationsLog' do
       u = RMuh::RPT::Log::Parsers::UnitedOperationsLog.new
-      u.should be_an_instance_of RMuh::RPT::Log::Parsers::UnitedOperationsLog
+      expect(u)
+        .to be_an_instance_of RMuh::RPT::Log::Parsers::UnitedOperationsLog
     end
 
     it 'should not include chat by default' do
       u = uolog.instance_variable_get(:@include_chat)
-      u.should be_false
+      expect(u).to be_false
     end
 
     it 'should convert to zulu by default' do
       u = uolog.instance_variable_get(:@to_zulu)
-      u.should be_true
+      expect(u).to be_true
     end
 
     it 'should use the UO timezone by default' do
       t = RMuh::RPT::Log::Util::UnitedOperations::UO_TZ
       u = uolog.instance_variable_get(:@timezone)
-      u.should eql t
+      expect(u).to eql t
     end
 
     it 'should not include chat if passed as false' do
       u = RMuh::RPT::Log::Parsers::UnitedOperationsLog.new(chat: false)
-      u.instance_variable_get(:@include_chat).should eql false
+      expect(u.instance_variable_get(:@include_chat)).to eql false
     end
 
     it 'should include chat if passed as true' do
       u = RMuh::RPT::Log::Parsers::UnitedOperationsLog.new(chat: true)
-      u.instance_variable_get(:@include_chat).should eql true
+      expect(u.instance_variable_get(:@include_chat)).to eql true
     end
 
     it 'should not convert to zulu if passed as false' do
       u = RMuh::RPT::Log::Parsers::UnitedOperationsLog.new(to_zulu: false)
-      u.instance_variable_get(:@to_zulu).should eql false
+      expect(u.instance_variable_get(:@to_zulu)).to eql false
     end
 
     it 'should convert to zulu if passed as true' do
       u = RMuh::RPT::Log::Parsers::UnitedOperationsLog.new(to_zulu: true)
-      u.instance_variable_get(:@to_zulu).should eql true
+      expect(u.instance_variable_get(:@to_zulu)).to eql true
     end
 
     it 'should specify a custom timezone if passed in' do
       t = TZInfo::Timezone.get('Etc/UTC')
       u = RMuh::RPT::Log::Parsers::UnitedOperationsLog.new(timezone: t)
-      u.instance_variable_get(:@timezone).should eql t
+      expect(u.instance_variable_get(:@timezone)).to eql t
     end
   end
 
@@ -119,25 +121,26 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
     it 'should return today if it is between 0400 and 2359' do
       tz = RMuh::RPT::Log::Util::UnitedOperations::UO_TZ
       t = Time.new(2014, 1, 1, 4, 0, 0)
-      uolog.send(:date_of_line_based_on_now, t).to_s.should eql tz.now.to_s
+      expect(uolog.send(:date_of_line_based_on_now, t).to_s).to eql tz.now.to_s
       t = Time.new(2014, 1, 1, 23, 59, 59)
-      uolog.send(:date_of_line_based_on_now, t).to_s.should eql tz.now.to_s
+      expect(uolog.send(:date_of_line_based_on_now, t).to_s).to eql tz.now.to_s
       t = Time.new(2014, 1, 1, 0, 0, 0)
-      uolog.send(:date_of_line_based_on_now, t).to_s.should_not eql tz.now.to_s
+      expect(uolog.send(:date_of_line_based_on_now, t).to_s)
+        .to_not eql tz.now.to_s
     end
 
     it 'should return yesterday if it is between 0000 and 0359' do
       tz = RMuh::RPT::Log::Util::UnitedOperations::UO_TZ
       d = RMuh::RPT::Log::Util::UnitedOperationsLog::ONE_DAY
       t = Time.new(2014, 1, 1, 0, 0, 0)
-      uolog.send(:date_of_line_based_on_now, t)
-        .to_s.should(eql((tz.now - d).to_s))
+      expect(uolog.send(:date_of_line_based_on_now, t).to_s)
+        .to eql((tz.now - d).to_s)
       t = Time.new(2014, 1, 1, 3, 59, 59)
-      uolog.send(:date_of_line_based_on_now, t)
-        .to_s.should(eql((tz.now - d).to_s))
+      expect(uolog.send(:date_of_line_based_on_now, t).to_s)
+        .to eql((tz.now - d).to_s)
       t = Time.new(2014, 1, 1, 4, 0, 0)
-      uolog.send(:date_of_line_based_on_now, t)
-        .to_s.should_not(eql((tz.now - d).to_s))
+      expect(uolog.send(:date_of_line_based_on_now, t).to_s)
+        .to_not eql((tz.now - d).to_s)
     end
   end
 
@@ -158,21 +161,21 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
       tz = uolog.instance_variable_get(:@timezone)
       l = {}
       uolog.send(:set_line_date!, l)
-      l[:year].should eql tz.now.year
+      expect(l[:year]).to eql tz.now.year
     end
 
     it "should set the line's month to this month" do
       tz = uolog.instance_variable_get(:@timezone)
       l = {}
       uolog.send(:set_line_date!, l)
-      l[:month].should eql tz.now.month
+      expect(l[:month]).to eql tz.now.month
     end
 
     it "should set the line's date to this day" do
       tz = uolog.instance_variable_get(:@timezone)
       l = {}
       uolog.send(:set_line_date!, l)
-      l[:day].should eql tz.now.day
+      expect(l[:day]).to eql tz.now.day
     end
   end
 
@@ -197,9 +200,9 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
       l = yday_line.dup
       uolog.stub(:date_of_line_based_on_now) { tz.now }
       uolog.send(:when_am_i!, l)
-      l[:year].should eql tz.now.year
-      l[:month].should eql tz.now.month
-      l[:day].should eql tz.now.day
+      expect(l[:year]).to eql tz.now.year
+      expect(l[:month]).to eql tz.now.month
+      expect(l[:day]).to eql tz.now.day
     end
 
     it 'should set the date as yday if line (0400-2359) now not same range' do
@@ -208,18 +211,18 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
       l = yday_line.dup
       uolog.stub(:date_of_line_based_on_now) { tz.now - d }
       uolog.send(:when_am_i!, l)
-      l[:year].should(eql((tz.now - d).year))
-      l[:month].should(eql((tz.now - d).month))
-      l[:day].should(eql((tz.now - d).day))
+      expect(l[:year]).to eql((tz.now - d).year)
+      expect(l[:month]).to eql((tz.now - d).month)
+      expect(l[:day]).to eql((tz.now - d).day)
     end
 
     it 'should set the date as today if time between 0000 and 0359' do
       tz = uolog.instance_variable_get(:@timezone)
       l = today_line.dup
       uolog.send(:when_am_i!, l)
-      l[:year].should eql tz.now.year
-      l[:month].should eql tz.now.month
-      l[:day].should eql tz.now.day
+      expect(l[:year]).to eql tz.now.year
+      expect(l[:month]).to eql tz.now.month
+      expect(l[:day]).to eql tz.now.day
     end
   end
 
@@ -239,22 +242,22 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
     it 'should call where_am_i! and set the year/month/day' do
       l = { hour: 4, min: 0, sec: 0 }
       x = uolog.send(:line_modifiers, l)
-      x.key?(:year).should be_true
-      x.key?(:month).should be_true
-      x.key?(:day).should be_true
+      expect(x.key?(:year)).to be_true
+      expect(x.key?(:month)).to be_true
+      expect(x.key?(:day)).to be_true
     end
 
     it 'sould call zulu! and set the time to zulu' do
       l = { hour: 4, min: 0, sec: 0 }
       x = uolog.send(:line_modifiers, l)
-      x.key?(:iso8601).should be_true
-      x.key?(:dtg).should be_true
+      expect(x.key?(:iso8601)).to be_true
+      expect(x.key?(:dtg)).to be_true
     end
 
     it 'should call add_guid! and add the event_guid' do
       l = { hour: 4, min: 0, sec: 0 }
       x = uolog.send(:line_modifiers, l)
-      x.key?(:event_guid).should be_true
+      expect(x.key?(:event_guid)).to be_true
     end
   end
 
@@ -285,44 +288,46 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
     end
 
     it 'should return an Array' do
-      uolog.send(:regex_matches, StringIO.new).should be_an_instance_of Array
+      expect(uolog.send(:regex_matches, StringIO.new)).to be_an_instance_of Array
     end
 
     it 'should iterate over multiple log lines' do
       x = uolog.send(:regex_matches, loglines)
-      x.should be_an_instance_of Array
-      x.length.should eql 2
+      expect(x).to be_an_instance_of Array
+      expect(x.length).to eql 2
     end
 
     it 'should properly match a guid line' do
       x = uolog.send(:regex_matches, StringIO.new(guid_line))
-      x[0][:type].should eql :beguid
+      expect(x[0][:type]).to eql :beguid
     end
 
     it 'should properly match a chat line' do
       x = uolog.send(:regex_matches, StringIO.new(chat_line))
-      x[0][:type].should eql :chat
+      expect(x[0][:type]).to eql :chat
     end
 
     it 'should not match a chat line if chat matching is disabled' do
       u = RMuh::RPT::Log::Parsers::UnitedOperationsLog.new
-      u.send(:regex_matches, StringIO.new(chat_line)).empty?.should be_true
+      expect(
+        u.send(:regex_matches, StringIO.new(chat_line)).empty?
+      ).to be_true
     end
 
     it 'should compact the Array' do
       l = StringIO.new("Something1\nSomething2\n")
       x = uolog.send(:regex_matches, l)
-      x.include?(nil).should be_false
+      expect(x.include?(nil)).to be_false
     end
 
     it 'should call #line_modifiers' do
       x = uolog.send(:regex_matches, StringIO.new(guid_line))
-      x[0].key?(:year).should be_true
-      x[0].key?(:month).should be_true
-      x[0].key?(:day).should be_true
-      x[0].key?(:iso8601).should be_true
-      x[0].key?(:dtg).should be_true
-      x[0].key?(:event_guid).should be_true
+      expect(x[0].key?(:year)).to be_true
+      expect(x[0].key?(:month)).to be_true
+      expect(x[0].key?(:day)).to be_true
+      expect(x[0].key?(:iso8601)).to be_true
+      expect(x[0].key?(:dtg)).to be_true
+      expect(x[0].key?(:event_guid)).to be_true
     end
   end
 
@@ -341,7 +346,7 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
     end
 
     it 'should not fail if arg1 is a StringIO object' do
-      expect { uolog.parse(StringIO.new) }.not_to raise_error
+      expect { uolog.parse(StringIO.new) }.to_not raise_error
     end
 
     it 'should fail if arg1 is a String' do
@@ -373,18 +378,18 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
     end
 
     it 'should return an Array' do
-      uolog.parse(StringIO.new).should be_an_instance_of Array
+      expect(uolog.parse(StringIO.new)).to be_an_instance_of Array
     end
 
     it 'should call #regex_matches' do
       x = uolog.parse(StringIO.new(guid_line))
-      x[0].key?(:type).should be_true
-      x[0].key?(:year).should be_true
-      x[0].key?(:month).should be_true
-      x[0].key?(:day).should be_true
-      x[0].key?(:iso8601).should be_true
-      x[0].key?(:dtg).should be_true
-      x[0].key?(:event_guid).should be_true
+      expect(x[0].key?(:type)).to be_true
+      expect(x[0].key?(:year)).to be_true
+      expect(x[0].key?(:month)).to be_true
+      expect(x[0].key?(:day)).to be_true
+      expect(x[0].key?(:iso8601)).to be_true
+      expect(x[0].key?(:dtg)).to be_true
+      expect(x[0].key?(:event_guid)).to be_true
     end
   end
 end

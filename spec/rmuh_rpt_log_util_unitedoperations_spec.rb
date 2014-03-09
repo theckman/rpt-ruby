@@ -61,21 +61,21 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     it 'should return a Hash' do
       ml = @uo_util.m_to_h(@mi.match('2013/12/31 16:00:00'))
       mr = @uo_util.zulu!(ml, uo_tz)
-      mr.should be_an_instance_of Hash
+      expect(mr).to be_an_instance_of Hash
     end
 
     it 'should properly convert the time to zulu' do
-      zulued[:iso8601].should eql good_time
+      expect(zulued[:iso8601]).to eql good_time
     end
 
     it 'should properly format the time in iso8601' do
       m = /^\d+-\d+-\d+T\d+:\d+:\d+Z$/
-      m.match(zulued[:iso8601]).should be_an_instance_of MatchData
+      expect(m.match(zulued[:iso8601])).to be_an_instance_of MatchData
     end
 
     it 'should properly format the time in DTG' do
       m = /^\d+Z\s([A-Z]){3}\s\d+$/
-      m.match(zulued[:dtg]).should be_an_instance_of MatchData
+      expect(m.match(zulued[:dtg])).to be_an_instance_of MatchData
     end
   end
 
@@ -96,23 +96,23 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     end
 
     it 'should return a String if key :iso8601 is there' do
-      @uo_util.__guid_data_base(@full_line).should be_an_instance_of String
+      expect(@uo_util.__guid_data_base(@full_line)).to be_an_instance_of String
     end
 
     it 'should return a String if key :iso8608 is missing' do
-      @uo_util.__guid_data_base(fline).should be_an_instance_of String
+      expect(@uo_util.__guid_data_base(fline)).to be_an_instance_of String
     end
 
     it 'should return iso8601 + type if key :is8601 is there' do
       x = @uo_util.__guid_data_base(@full_line)
-      x.should eql "#{@full_line[:iso8601]}#{@full_line[:type].to_s}"
+      expect(x).to eql "#{@full_line[:iso8601]}#{@full_line[:type].to_s}"
     end
 
     it 'should be year + month + day + hr + min + sec + type if !iso8601' do
       x = @uo_util.__guid_data_base(fline)
       s = "#{fline[:year]}#{fline[:month]}#{fline[:day]}#{fline[:hour]}" \
           "#{fline[:min]}#{fline[:sec]}#{fline[:type].to_s}"
-      x.should eql s
+      expect(x).to eql s
     end
   end
 
@@ -131,17 +131,17 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
 
     it 'should return a String' do
       l = {}
-      @uo_util.__guid_add_data(l, :year).should be_an_instance_of String
+      expect(@uo_util.__guid_add_data(l, :year)).to be_an_instance_of String
     end
 
     it 'should return the key you requested by as a String' do
       l = { year: 2014 }
-      @uo_util.__guid_add_data(l, :year).should eql '2014'
+      expect(@uo_util.__guid_add_data(l, :year)).to eql '2014'
     end
 
     it 'should return an empty String if the key does not exist' do
       l = { year: 2014 }
-      @uo_util.__guid_add_data(l, :month).should eql ''
+      expect(@uo_util.__guid_add_data(l, :month)).to eql ''
     end
   end
 
@@ -157,53 +157,53 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     end
 
     it 'should return a Hash' do
-      @uo_util.add_guid!(@full_line).should be_an_instance_of Hash
+      expect(@uo_util.add_guid!(@full_line)).to be_an_instance_of Hash
     end
 
     it 'should return a Hash that matches the reference' do
-      @uo_util.add_guid!(@full_line).should eql guid_line
+      expect(@uo_util.add_guid!(@full_line)).to eql guid_line
     end
 
     it 'should properly set the :event_guid for killed' do
       x = @uo_util.add_guid!(spec_killed_line)
       y = spec_guid_reference_implementation(spec_killed_line)
-      x.key?(:event_guid).should be_true
-      x[:event_guid].should eql y[:event_guid]
+      expect(x.key?(:event_guid)).to be_true
+      expect(x[:event_guid]).to eql y[:event_guid]
     end
 
     it 'should properly set the :event_guid for died' do
       x = @uo_util.add_guid!(spec_died_line)
       y = spec_guid_reference_implementation(spec_died_line)
-      x.key?(:event_guid).should be_true
-      y[:event_guid].should eql y[:event_guid]
+      expect(x.key?(:event_guid)).to be_true
+      expect(y[:event_guid]).to eql y[:event_guid]
     end
 
     it 'should properly set the :event_guid for wounded' do
       x = @uo_util.add_guid!(spec_wounded_line)
       y = spec_guid_reference_implementation(spec_wounded_line)
-      x.key?(:event_guid).should be_true
-      x[:event_guid].should eql y[:event_guid]
+      expect(x.key?(:event_guid)).to be_true
+      expect(x[:event_guid]).to eql y[:event_guid]
     end
 
     it 'should properly set the :event_guid for announcements' do
       x = @uo_util.add_guid!(spec_announcement_line)
       y = spec_guid_reference_implementation(spec_announcement_line)
-      x.key?(:event_guid).should be_true
-      x[:event_guid].should eql y[:event_guid]
+      expect(x.key?(:event_guid)).to be_true
+      expect(x[:event_guid]).to eql y[:event_guid]
     end
 
     it 'should properly set the :event_guid for beguid' do
       x = @uo_util.add_guid!(spec_beguid_line)
       y = spec_guid_reference_implementation(spec_beguid_line)
-      x.key?(:event_guid).should be_true
-      x[:event_guid].should eql y[:event_guid]
+      expect(x.key?(:event_guid)).to be_true
+      expect(x[:event_guid]).to eql y[:event_guid]
     end
 
     it 'should properly set the :event_guid for chat' do
       x = @uo_util.add_guid!(spec_chat_line)
       y = spec_guid_reference_implementation(spec_chat_line)
-      x.key?(:event_guid).should be_true
-      x[:event_guid].should eql y[:event_guid]
+      expect(x.key?(:event_guid)).to be_true
+      expect(x[:event_guid]).to eql y[:event_guid]
     end
   end
 
@@ -238,8 +238,8 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
       md = @mf.match('2321.3 0.342 123.45')
       %w{server_time damage distance}.each do |m|
         x = @uo_util.__modifiers(md, m)
-        x.should be_an_instance_of Float
-        x.should eql md[m].to_f
+        expect(x).to be_an_instance_of Float
+        expect(x).to eql md[m].to_f
       end
     end
 
@@ -247,16 +247,16 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
       chat = 'Group'
       md = /(?<channel>.*)/.match(chat)
       x = @uo_util.__modifiers(md, 'channel')
-      x.should be_an_instance_of String
-      /[[:lower:]]+/.match(x).should_not be_nil
-      x.should eql chat.downcase
+      expect(x).to be_an_instance_of String
+      expect(/[[:lower:]]+/.match(x)).to_not be_nil
+      expect(x).to eql chat.downcase
     end
 
     it 'should convert the nearby players to Array' do
       md = @ma.match('["one","two","three"]"')
       x = @uo_util.__modifiers(md, 'nearby_players')
-      x.should be_an_instance_of Array
-      x.length.should be 3
+      expect(x).to be_an_instance_of Array
+      expect(x.length).to be 3
     end
   end
 
@@ -275,8 +275,8 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
       md = @mi.match('2014/02/09 14:44:44')
       %w{year month day hour min sec}.each do |m|
         x = @uo_util.__line_modifiers(md, m)
-        x.should be_an_instance_of Fixnum
-        x.should eql md[m].to_i
+        expect(x).to be_an_instance_of Fixnum
+        expect(x).to eql md[m].to_i
       end
     end
 
@@ -284,8 +284,8 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
       md = @mf.match('2321.3 0.342 123.45')
       %w{server_time damage distance}.each do |m|
         x = @uo_util.__modifiers(md, m)
-        x.should be_an_instance_of Float
-        x.should eql md[m].to_f
+        expect(x).to be_an_instance_of Float
+        expect(x).to eql md[m].to_f
       end
     end
 
@@ -293,8 +293,8 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
       d = '042ZYK'
       md = /(?<something>.*)/.match(d)
       x = @uo_util.__line_modifiers(md, 'something')
-      x.should be_an_instance_of md['something'].class
-      x.should eql md['something']
+      expect(x).to be_an_instance_of md['something'].class
+      expect(x).to eql md['something']
     end
   end
 
@@ -313,14 +313,14 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
 
     it 'should return a Hash' do
       h = @uo_util.m_to_h(/.*/.match('thing'))
-      h.should be_an_instance_of Hash
+      expect(h).to be_an_instance_of Hash
     end
 
     it 'should properly convert the correct values to int' do
       md = @mi.match('2014/02/09 14:44:44')
       h = @uo_util.m_to_h(md)
       [:year, :month, :day, :hour, :min, :sec].each do |m|
-        h[m].should be_an_instance_of Fixnum
+        expect(h[m]).to be_an_instance_of Fixnum
       end
     end
 
@@ -328,27 +328,27 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
       md = @mf.match('2321.3 0.342 123.45')
       h = @uo_util.m_to_h(md)
       [:server_time, :damage, :distance].each do |m|
-        h[m].should be_an_instance_of Float
+        expect(h[m]).to be_an_instance_of Float
       end
     end
 
     it 'should convert the nearby players to an Array of Strings' do
       md = @ma.match('["one","two","three"]"')
       h = @uo_util.m_to_h(md)
-      h[:nearby_players].should be_an_instance_of Array
-      h[:nearby_players].length.should be 3
+      expect(h[:nearby_players]).to be_an_instance_of Array
+      expect(h[:nearby_players].length).to be 3
 
       h[:nearby_players].each do |p|
-        p.should be_an_instance_of String
-        p.empty?.should be false
+        expect(p).to be_an_instance_of String
+        expect(p.empty?).to be false
       end
     end
 
     it 'should convert nearby players to an empty Array if it is None' do
       md = @ma.match('None."')
       h = @uo_util.m_to_h(md)
-      h[:nearby_players].should be_an_instance_of Array
-      h[:nearby_players].empty?.should be_true
+      expect(h[:nearby_players]).to be_an_instance_of Array
+      expect(h[:nearby_players].empty?).to be_true
     end
   end
 
@@ -367,17 +367,17 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
 
     it 'should return nil if the key does not exist' do
       h = { one: 'two' }
-      @uo_util.validate_bool_opt(h, :two).should be_nil
+      expect(@uo_util.validate_bool_opt(h, :two)).to be_nil
     end
 
     it 'should return nil if the key is true' do
       h = { x: true }
-      @uo_util.validate_bool_opt(h, :x).should be_nil
+      expect(@uo_util.validate_bool_opt(h, :x)).to be_nil
     end
 
     it 'should return nil if the key is false' do
       h = { x: false }
-      @uo_util.validate_bool_opt(h, :x).should be_nil
+      expect(@uo_util.validate_bool_opt(h, :x)).to be_nil
     end
 
     it 'should raise ArgumentError if the key is a String' do
@@ -431,7 +431,7 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     end
 
     it 'should return nil if arg 1 is an instance of TZInfo::DataTimezone' do
-      @uo_util.validate_timezone(timezone: uo_tz).should be_nil
+      expect(@uo_util.validate_timezone(timezone: uo_tz)).to be_nil
     end
 
     it 'should raise ArgumentError if arg 1 is a String' do
