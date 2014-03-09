@@ -1,4 +1,4 @@
-# -*- coding; UTF-8 -*-
+# -*- coding: UTF-8 -*-
 # These are just specs to make sure the example files run with an exit
 # code of zero.
 #
