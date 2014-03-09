@@ -5,4 +5,4 @@ rvm:
 - 1.9.3
 notifications:
   email:
-  - tim+travisci@timheckman.net
+  - t+travisci@heckman.io
