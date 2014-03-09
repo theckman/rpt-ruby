@@ -288,7 +288,8 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
     end
 
     it 'should return an Array' do
-      expect(uolog.send(:regex_matches, StringIO.new)).to be_an_instance_of Array
+      expect(uolog.send(:regex_matches, StringIO.new))
+        .to be_an_instance_of Array
     end
 
     it 'should iterate over multiple log lines' do
