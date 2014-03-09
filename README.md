@@ -121,7 +121,7 @@ information directly from the server.
 
 Here is a quick overview of how to use this functionality:
 
-```
+```Ruby
 require 'rmuh/serverstats/base
 UO_IP = '70.42.74.59'
 s = RMuh::ServerStats::Base.new(host: UO_IP)
@@ -135,13 +135,13 @@ the object.
 
 If you want to avoid using the cache:
 
-```
+```Ruby
 s = RMuh::ServerStats::Base.new(host: UO_IP, cache: false)
 ```
 If you want to be able to pull each part of the returned data set using
 dot-notation, you can use the `Advanced` class:
 
-```
+```Ruby
 require 'rmuh/serverstats/base
 s = RMuh::ServerStats::Advanced.new(host: UO_IP)
 s.update_cache
