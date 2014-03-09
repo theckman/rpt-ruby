@@ -10,11 +10,11 @@ describe RMuh::ServerStats::Base do
     let(:port) { RMuh::ServerStats::Base::DEFAULT_PORT }
 
     it 'should be an instance of Fixnum' do
-      port.should be_an_instance_of Fixnum
+      expect(port).to be_an_instance_of Fixnum
     end
 
     it 'should be the default ArmA 2 port' do
-      port.should eql 2_302
+      expect(port).to eql 2_302
     end
   end
 
@@ -39,7 +39,7 @@ describe RMuh::ServerStats::Base do
 
     it 'should return nil' do
       x = RMuh::ServerStats::Base.validate_opts(host: '127.0.0.1')
-      x.should be_nil
+      expect(x).to be_nil
     end
   end
 
@@ -60,13 +60,13 @@ describe RMuh::ServerStats::Base do
 
     it 'should convert each key to an instance variable' do
       h = { one: 1, two: '2', three: :three }
-      b.instance_variable_get(:@one).should be_nil
-      b.instance_variable_get(:@two).should be_nil
-      b.instance_variable_get(:@three).should be_nil
+      expect(b.instance_variable_get(:@one)).to be_nil
+      expect(b.instance_variable_get(:@two)).to be_nil
+      expect(b.instance_variable_get(:@three)).to be_nil
       b.send(:opts_to_instance, h)
-      b.instance_variable_get(:@one).should eql h[:one]
-      b.instance_variable_get(:@two).should eql h[:two]
-      b.instance_variable_get(:@three).should eql h[:three]
+      expect(b.instance_variable_get(:@one)).to eql h[:one]
+      expect(b.instance_variable_get(:@two)).to eql h[:two]
+      expect(b.instance_variable_get(:@three)).to eql h[:three]
     end
   end
 
@@ -79,7 +79,7 @@ describe RMuh::ServerStats::Base do
 
     it 'should return an instance of itself if arg 1 is a Hash' do
       s = RMuh::ServerStats::Base.new(host: '127.0.0.1')
-      s.should be_an_instance_of RMuh::ServerStats::Base
+      expect(s).to be_an_instance_of RMuh::ServerStats::Base
     end
 
     it 'should require the host attribute' do
@@ -91,21 +91,21 @@ describe RMuh::ServerStats::Base do
     it 'should set an instance variable for each thing in Hash' do
       h = { host: '1.2.3.4', port: 2_303, cache: false }
       s = RMuh::ServerStats::Base.new(h)
-      s.instance_variable_get(:@host).should eql h[:host]
-      s.instance_variable_get(:@port).should eql h[:port]
-      s.instance_variable_get(:@cache).should eql h[:cache]
+      expect(s.instance_variable_get(:@host)).to eql h[:host]
+      expect(s.instance_variable_get(:@port)).to eql h[:port]
+      expect(s.instance_variable_get(:@cache)).to eql h[:cache]
     end
 
     it 'should create an instance of GamespyQuery::Socket' do
       s = RMuh::ServerStats::Base.new(host: '127.0.0.1')
       x = s.instance_variable_get(:@gsq)
-      x.should be_an_instance_of GamespyQuery::Socket
+      expect(x).to be_an_instance_of GamespyQuery::Socket
     end
 
     it 'should specify default values for @port and @cache' do
       s = RMuh::ServerStats::Base.new(host: '127.0.0.1')
-      s.instance_variable_get(:@cache).should be true
-      s.instance_variable_get(:@port).should eql 2_302
+      expect(s.instance_variable_get(:@cache)).to be true
+      expect(s.instance_variable_get(:@port)).to eql 2_302
     end
   end
 
@@ -120,7 +120,7 @@ describe RMuh::ServerStats::Base do
     end
 
     it 'should return a Hash' do
-      b.send(:sync).should be_an_instance_of Hash
+      expect(b.send(:sync)).to be_an_instance_of Hash
     end
   end
 
@@ -133,13 +133,13 @@ describe RMuh::ServerStats::Base do
 
     it 'should return the content of @servicestats if cache == true' do
       b.instance_variable_set(:@serverstats, one: 'two')
-      b.send(:remote_stats).should eql(one: 'two')
+      expect(b.send(:remote_stats)).to eql(one: 'two')
     end
 
     it 'should return the return value from the #sync method if cache true' do
       n = RMuh::ServerStats::Base.new(host: '127.0.0.1', cache: false)
       n.stub(:sync).and_return(one: 'two')
-      n.send(:remote_stats).should eql(one: 'two')
+      expect(n.send(:remote_stats)).to eql(one: 'two')
     end
   end
 
@@ -157,12 +157,12 @@ describe RMuh::ServerStats::Base do
 
     it 'should set the contents of @serverstats if caching' do
       @b.update_cache
-      @b.instance_variable_get(:@serverstats).should eql(one: 'two')
+      expect(@b.instance_variable_get(:@serverstats)).to eql(one: 'two')
     end
 
     it 'should not set the contents of @serverstats if no caching' do
       @bf.update_cache
-      @bf.instance_variable_get(:@serverstats).should be_nil
+      expect(@bf.instance_variable_get(:@serverstats)).to be_nil
     end
   end
 
@@ -180,11 +180,11 @@ describe RMuh::ServerStats::Base do
     end
 
     it 'should return the contents of @serverstats if caching enabled' do
-      @b.stats.should eql @b.instance_variable_get(:@serverstats)
+      expect(@b.stats).to eql @b.instance_variable_get(:@serverstats)
     end
 
     it 'should return the contents of sync if caching is disabled' do
-      @bf.stats.should eql(one: 'two')
+      expect(@bf.stats).to eql(one: 'two')
     end
   end
 end

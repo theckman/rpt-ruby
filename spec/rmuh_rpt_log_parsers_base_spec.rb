@@ -12,7 +12,7 @@ describe RMuh::RPT::Log::Parsers::Base do
 
   context 'text' do
     it 'should be a StringIO object' do
-      text.should be_an_instance_of StringIO
+      expect(text).to be_an_instance_of StringIO
     end
   end
 
@@ -24,7 +24,7 @@ describe RMuh::RPT::Log::Parsers::Base do
     end
 
     it 'should return an instance of RMuh::RPT::Log::Parsers::Base' do
-      base.should be_an_instance_of RMuh::RPT::Log::Parsers::Base
+      expect(base).to be_an_instance_of RMuh::RPT::Log::Parsers::Base
     end
   end
 
@@ -37,21 +37,44 @@ describe RMuh::RPT::Log::Parsers::Base do
       expect { base.parse }.to raise_error ArgumentError
     end
 
-    it 'should only accept a StringIO object' do
-      expect { base.parse('urmom') }.to raise_error ArgumentError
-      expect { base.parse(42) }.to raise_error ArgumentError
+    it 'should raise an error when passed nil' do
+      expect { base.parse(nil) }.to raise_error ArgumentError
+    end
+
+    it 'should raise an error when passed a String' do
+      expect { base.parse('') }.to raise_error ArgumentError
+    end
+
+    it 'should raise an error when passed a Fixnum' do
+      expect { base.parse(0) }.to raise_error ArgumentError
+    end
+
+    it 'should raise an error when passed a Float' do
+      expect { base.parse(0.0) }.to raise_error ArgumentError
+    end
+
+    it 'should raise an error when passed an Array' do
+      expect { base.parse([]) }.to raise_error ArgumentError
+    end
+
+    it 'should raise an error when passed a Hash' do
+      expect { base.parse({}) }.to raise_error ArgumentError
+    end
+
+    it 'should not raise an error when passed a StringIO object' do
+      expect { base.parse(StringIO.new) }.to_not raise_error
     end
 
     it 'should return an Array' do
       expect(base.parse(text)).to be_an_instance_of Array
     end
 
-    it 'the Array size should be 2' do
+    it 'should return an the Array with a size of 2' do
       expect(base.parse(text).size).to be 2
     end
 
     it 'should be an Array of hashes' do
-      base.parse(text).each { |p| p.should be_an_instance_of Hash }
+      base.parse(text).each { |p| expect(p).to be_an_instance_of Hash }
     end
   end
 end
