@@ -11,8 +11,8 @@ module RMuh
     #
     class Advanced < RMuh::ServerStats::Base
       def method_missing(method, *args, &block)
-        super unless stats.key?(method)
-        stats[method]
+        super unless stats.key?(method.to_s)
+        stats[method.to_s]
       end
     end
   end
