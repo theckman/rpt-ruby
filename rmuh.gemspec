@@ -8,7 +8,7 @@ require 'rmuh/version'
 Gem::Specification.new do |g|
   g.name        = 'rmuh'
   g.version     = RMuh::VERSION
-  g.date        = '2014-02-18'
+  g.date        = Time.now.strftime('%Y-%m-%d')
   g.description = 'ArmA 2 Ruby Library for RPT, Log, and GameSpy'
   g.summary     = 'ArmA 2 Ruby Library'
   g.authors     = ['Tim Heckman']
