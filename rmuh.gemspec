@@ -27,6 +27,7 @@ Gem::Specification.new do |g|
   g.add_development_dependency 'coveralls', '~> 0.7', '>= 0.7.0'
   g.add_development_dependency 'awesome_print', '~> 1.2', '>= 1.2.0'
 
+  g.add_runtime_dependency 'tzinfo-data'
   g.add_runtime_dependency 'tzinfo', '~> 1.1', '>= 1.1.0'
   g.add_runtime_dependency 'httparty', '~> 0.12', '>= 0.12.0'
   g.add_runtime_dependency 'gamespy_query', '~> 0.1', '>= 0.1.5'
