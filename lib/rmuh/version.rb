@@ -6,7 +6,7 @@
 module RMuh
   VERSION_MAJ ||= 0
   VERSION_MIN ||= 2
-  VERSION_REV ||= 1
+  VERSION_REV ||= 2
 
   VERSION ||= "#{VERSION_MAJ}.#{VERSION_MIN}.#{VERSION_REV}"
 end
