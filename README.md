@@ -125,7 +125,6 @@ Here is a quick overview of how to use this functionality:
 require 'rmuh/serverstats/base'
 UO_IP = '70.42.74.59'
 s = RMuh::ServerStats::Base.new(host: UO_IP)
-s.update_cache
 puts s.stats
 ```
 By default the `ServerStats::Base` class caches the information so you need to
@@ -144,7 +143,6 @@ dot-notation, you can use the `Advanced` class:
 ```Ruby
 require 'rmuh/serverstats/base'
 s = RMuh::ServerStats::Advanced.new(host: UO_IP)
-s.update_cache
 puts s.players
 ```
 In this case, `players` is an Array. If you specify a key that doesn't exist
