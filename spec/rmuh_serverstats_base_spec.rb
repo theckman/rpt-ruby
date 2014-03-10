@@ -19,6 +19,8 @@ describe RMuh::ServerStats::Base do
   end
 
   context '::validate_opts' do
+    let(:srv_hash) { { host: '127.0.0.1' } }
+
     it 'should take no more than one arg' do
       expect do
         RMuh::ServerStats::Base.validate_opts(nil, nil)
@@ -35,6 +37,20 @@ describe RMuh::ServerStats::Base do
       expect do
         RMuh::ServerStats::Base.validate_opts({})
       end.to raise_error ArgumentError
+    end
+
+    it 'should set the default port if not provided' do
+      h = srv_hash.dup
+      RMuh::ServerStats::Base.validate_opts(h)
+      expect(h.key?(:port)).to be_true
+      expect(h[:port]).to eql RMuh::ServerStats::Base::DEFAULT_PORT
+    end
+
+    it 'should set the auto_cache key to true if not provided' do
+      h = srv_hash.dup
+      RMuh::ServerStats::Base.validate_opts(h)
+      expect(h.key?(:auto_cache)).to be_true
+      expect(h[:auto_cache]).to be_true
     end
 
     it 'should return nil' do

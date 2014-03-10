@@ -41,6 +41,7 @@ module RMuh
         fail ArgumentError, ':host is required' unless opts.key?(:host)
         opts[:port] ||= DEFAULT_PORT
         opts[:cache] = true unless opts.key?(:cache)
+        opts[:auto_cache] = true unless opts.key?(:auto_cache)
         nil
       end
 
@@ -50,6 +51,7 @@ module RMuh
 
       def remote_stats
         if @cache
+          update_cache if @serverstats.nil? && @auto_cache
           @serverstats
         else
           sync
