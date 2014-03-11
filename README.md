@@ -15,7 +15,9 @@ LICENSE
 -------
 **RMuh** is released under the
 [The MIT License](http://opensource.org/licenses/MIT). The full text of the
-license can be found in the `LICENSE` file.
+license can be found in the `LICENSE` file. The summary can be found
+[here](https://tldrlegal.com/license/mit-license#summary) courtest of
+tldrlegal.
 
 In short, MIT is a permissive license and means you can pretty much do what you
 want with this code as long as the original copyright is included.
