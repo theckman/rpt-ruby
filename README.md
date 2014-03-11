@@ -107,7 +107,7 @@ own parser.
 
 ```Ruby
 require 'rmuh/rpt/log/fetch'
-require 'rmuh/rpt/parsers/base
+require 'rmuh/rpt/parsers/base'
 URL = 'http://arma2.unitedoperations.net/dump/SRV1/SRV1_RPT.txt'
 f = RMuh::RPT::Log::Fetch.new(URL)
 p = RMuh::RPT::Log::Parsers::Base.new
