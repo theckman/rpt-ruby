@@ -14,8 +14,11 @@ Arrowhead servers).
 LICENSE
 -------
 **RMuh** is released under the
-[The MIT License](http://opensource.org/licenses/MIT) The full text of the
-license can be found in the `LICENSE` file
+[The MIT License](http://opensource.org/licenses/MIT). The full text of the
+license can be found in the `LICENSE` file.
+
+In short, MIT is a permissive license and means you can pretty much do what you
+want with this code as long as the original copyright is included.
 
 CONTRIBUTING
 ------------
