@@ -50,7 +50,11 @@ gem 'rmuh'
 **Gemspec**:
 
 ```Ruby
-g.add_runtime_dependency 'rmuh'
+Gem::Specification.new do |g|
+  # ...
+  g.add_runtime_dependency 'rmuh'
+  # ...
+end
 ```
 
 **Note:** If you want to do version pinning within your `Gemfile` or `Gemspec`
