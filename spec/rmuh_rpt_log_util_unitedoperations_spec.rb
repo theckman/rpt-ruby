@@ -105,13 +105,13 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
 
     it 'should return iso8601 + type if key :is8601 is there' do
       x = @uo_util.__guid_data_base(@full_line)
-      expect(x).to eql "#{@full_line[:iso8601]}#{@full_line[:type].to_s}"
+      expect(x).to eql "#{@full_line[:iso8601]}#{@full_line[:type]}"
     end
 
     it 'should be year + month + day + hr + min + sec + type if !iso8601' do
       x = @uo_util.__guid_data_base(fline)
       s = "#{fline[:year]}#{fline[:month]}#{fline[:day]}#{fline[:hour]}" \
-          "#{fline[:min]}#{fline[:sec]}#{fline[:type].to_s}"
+          "#{fline[:min]}#{fline[:sec]}#{fline[:type]}"
       expect(x).to eql s
     end
   end
@@ -236,7 +236,7 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
 
     it 'should convert the correct values to Float' do
       md = @mf.match('2321.3 0.342 123.45')
-      %w{server_time damage distance}.each do |m|
+      %w( server_time damage distance ).each do |m|
         x = @uo_util.__modifiers(md, m)
         expect(x).to be_an_instance_of Float
         expect(x).to eql md[m].to_f
@@ -273,7 +273,7 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
 
     it 'should convert the correct values to Fixnum' do
       md = @mi.match('2014/02/09 14:44:44')
-      %w{year month day hour min sec}.each do |m|
+      %w( year month day hour min sec ).each do |m|
         x = @uo_util.__line_modifiers(md, m)
         expect(x).to be_an_instance_of Fixnum
         expect(x).to eql md[m].to_i
@@ -282,7 +282,7 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
 
     it 'should convert the correct values to Float' do
       md = @mf.match('2321.3 0.342 123.45')
-      %w{server_time damage distance}.each do |m|
+      %w( server_time damage distance ).each do |m|
         x = @uo_util.__modifiers(md, m)
         expect(x).to be_an_instance_of Float
         expect(x).to eql md[m].to_f

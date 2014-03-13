@@ -10,8 +10,8 @@ DIR = File.expand_path('../../examples', __FILE__)
 
 describe 'exampple files' do
 
-  %w{ basic_parsing.rb basic_serverstats.rb serverstats_advanced.rb
-      serverstats_cache.rb uolog_parsing.rb uorpt_parsing.rb }.each do |e|
+  %w( basic_parsing.rb basic_serverstats.rb serverstats_advanced.rb
+      serverstats_cache.rb uolog_parsing.rb uorpt_parsing.rb ).each do |e|
     context File.join(DIR, e) do
       it 'should run and return a zero exit code' do
         _, _, s = Open3.capture3(
