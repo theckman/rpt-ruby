@@ -37,5 +37,5 @@ p = RMuh::RPT::Log::Parsers::Base.new
 parsed = p.parse(f.log)
 
 puts '#### Metadata Hash'
-ap parsed
+ap parsed, indent: -2
 puts '#### End of Hashes'

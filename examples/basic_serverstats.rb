@@ -19,4 +19,4 @@ SRV = { host: 'srv1.unitedoperations.net', port: 2_302 }
 # by default this is a blocking operation. See serverstats_cache.rb for
 # alternative options
 s = RMuh::ServerStats::Base.new(host: SRV[:host], port: SRV[:port])
-ap s.stats
+ap s.stats, indent: -2

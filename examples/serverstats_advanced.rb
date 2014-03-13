@@ -20,7 +20,7 @@ SRV = { host: 'srv1.unitedoperations.net', port: 2_302 }
 s = RMuh::ServerStats::Advanced.new(host: SRV[:host], port: SRV[:port])
 
 # print the full stats out
-ap s.stats
+ap s.stats, indent: -2
 
 # print only the players Array
-ap s.players
+ap s.players, indent: -2
