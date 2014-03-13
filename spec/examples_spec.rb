@@ -50,6 +50,7 @@ describe 'exampple files' do
         "ruby #{File.join(DIR, 'uolog_parsing.rb')}"
       )
       expect(s.success?).to be_true
+    end
   end
 
   context "#{File.join(DIR, 'uorpt_parsing.rb')}" do
