@@ -20,11 +20,11 @@ SRV = { host: 'srv1.unitedoperations.net', port: 2_302 }
 s = RMuh::ServerStats::Base.new(
   host: SRV[:host], port: SRV[:port], auto_cache: false
 )
-ap s.stats # this should be nil
+ap s.stats, indent: -2 # this should be nil
 
 # update the cache within the object from the server, then print the stats
 s.update_cache
-ap s.stats
+ap s.stats, indent: -2
 
 # You can also turn off the cache completely, which means '.stats' will be a
 # blocking call each time. You do this by passing 'cache: false'
@@ -32,4 +32,4 @@ s = RMuh::ServerStats::Base.new(
   host: SRV[:host], port: SRV[:port], cache: false
 )
 
-ap s.stats
+ap s.stats, indent: -2
