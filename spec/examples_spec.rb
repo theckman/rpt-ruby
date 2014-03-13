@@ -36,9 +36,26 @@ describe 'exampple files' do
   end
 
   context "#{File.join(DIR, 'serverstats_cache.rb')}" do
-    it 'should run an return a zero exit code' do
+    it 'should run and return a zero exit code' do
       _, _, s = Open3.capture3(
         "ruby #{File.join(DIR, 'serverstats_cache.rb')}"
+      )
+      expect(s.success?).to be_true
+    end
+  end
+
+  context "#{File.join(DIR, 'uolog_parsing.rb')}" do
+    it 'should run and return a zero exit code' do
+      _, _, s = Open3.capture3(
+        "ruby #{File.join(DIR, 'uolog_parsing.rb')}"
+      )
+      expect(s.success?).to be_true
+  end
+
+  context "#{File.join(DIR, 'uorpt_parsing.rb')}" do
+    it 'should run and return a zero exit code' do
+      _, _, s = Open3.capture3(
+        "ruby #{File.join(DIR, 'uorpt_parsing.rb')}"
       )
       expect(s.success?).to be_true
     end
