@@ -16,8 +16,8 @@ Gem::Specification.new do |g|
   g.homepage    = 'https://github.com/theckman/rmuh'
   g.license     = 'MIT'
 
-  g.test_files  = %x{git ls-files spec/*}.split
-  g.files       = %x{git ls-files}.split
+  g.test_files  = %x( git ls-files spec/* ).split
+  g.files       = %x( git ls-files).split
 
   g.add_development_dependency 'rake', '~>10.1', '>= 10.1.0'
   g.add_development_dependency 'rspec', '~>2.14', '>= 2.14.1'

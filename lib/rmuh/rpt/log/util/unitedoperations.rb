@@ -94,9 +94,9 @@ module RMuh
             if line[:iso8601].nil?
               return "#{line[:year]}#{line[:month]}#{line[:day]}" \
                      "#{line[:hour]}#{line[:min]}#{line[:sec]}" \
-                     "#{line[:type].to_s}"
+                     "#{line[:type]}"
             else
-              return "#{line[:iso8601]}#{line[:type].to_s}"
+              return "#{line[:iso8601]}#{line[:type]}"
             end
           end
 
