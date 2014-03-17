@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 require 'digest'
 
 def spec_guid_reference_implementation(mock_line)
