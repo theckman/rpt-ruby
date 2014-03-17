@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 require 'digest'
 
 def spec_guid_reference_implementation(mock_line)
@@ -19,9 +20,9 @@ def spec_minimum_data(line)
   if line[:iso8601].nil?
     data = "#{line[:year]}#{line[:month]}#{line[:day]}" \
            "#{line[:hour]}#{line[:min]}#{line[:sec]}" \
-           "#{line[:type].to_s}"
+           "#{line[:type]}"
   else
-    data = "#{line[:iso8601]}#{line[:type].to_s}"
+    data = "#{line[:iso8601]}#{line[:type]}"
   end
   data
 end
