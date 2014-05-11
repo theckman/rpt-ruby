@@ -9,7 +9,7 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     @uo_util.extend(RMuh::RPT::Log::Util::UnitedOperations)
     @mi = Regexp.new(
       '(?<year>\d+)/(?<month>\d+)/(?<day>\d+)'\
-      '\s(?<hour>\d+):(?<min>\d+):(?<sec>\d+)'
+      '\s(?<hour>\d+):(?<min>\d+):(?<sec>\d+)\s(?<player_num>\d+)'
     )
     @mf = Regexp.new(
       '(?<server_time>[0-9.]+)\s(?<damage>[0-9.]+)\s(?<distance>[0-9.]+)'
@@ -44,7 +44,7 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
       t.strftime('%Y-%m-%dT%H:%M:%SZ')
     end
     let(:zulued) do
-      ml = @uo_util.m_to_h(@mi.match('2013/12/31 16:00:00'))
+      ml = @uo_util.m_to_h(@mi.match('2013/12/31 16:00:00 0'))
       @uo_util.zulu!(ml, uo_tz)
     end
 
@@ -57,7 +57,7 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     end
 
     it 'should return a Hash' do
-      ml = @uo_util.m_to_h(@mi.match('2013/12/31 16:00:00'))
+      ml = @uo_util.m_to_h(@mi.match('2013/12/31 16:00:00 0'))
       mr = @uo_util.zulu!(ml, uo_tz)
       expect(mr).to be_an_instance_of Hash
     end
@@ -270,8 +270,8 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     end
 
     it 'should convert the correct values to Fixnum' do
-      md = @mi.match('2014/02/09 14:44:44')
-      %w( year month day hour min sec ).each do |m|
+      md = @mi.match('2014/02/09 14:44:44 0')
+      %w( year month day hour min sec player_num ).each do |m|
         x = @uo_util.__line_modifiers(md, m)
         expect(x).to be_an_instance_of Fixnum
         expect(x).to eql md[m].to_i
@@ -315,7 +315,7 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     end
 
     it 'should properly convert the correct values to int' do
-      md = @mi.match('2014/02/09 14:44:44')
+      md = @mi.match('2014/02/09 14:44:44 0')
       h = @uo_util.m_to_h(md)
       [:year, :month, :day, :hour, :min, :sec].each do |m|
         expect(h[m]).to be_an_instance_of Fixnum

@@ -254,6 +254,23 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
       x = uolog.send(:line_modifiers, l)
       expect(x.key?(:event_guid)).to be_true
     end
+
+    context 'when a user join event' do
+      it 'should call strip_port!' do
+        l = { hour: 4, min: 0, sec: 0, type: :connect, net: '127.0.0.1:443' }
+        x = uolog.send(:line_modifiers, l)
+        expect(x.key?(:ipaddr)).to be_true
+        expect(x.key?(:net)).to be_false
+      end
+    end
+
+    context 'when not a user joint event' do
+      it 'should not call strip_port!' do
+        l = { hour: 4, min: 0, sec: 0, type: :x, net: '127.0.0.1:443' }
+        x = uolog.send(:line_modifiers, l)
+        expect(x.key?(:net)).to be_true
+      end
+    end
   end
 
   context '#regex_matches' do

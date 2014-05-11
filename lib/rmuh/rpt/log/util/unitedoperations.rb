@@ -30,7 +30,9 @@ module RMuh
 
           def __line_modifiers(match, match_name)
             m = match_name
-            if [:year, :month, :day, :hour, :min, :sec].include?(m.to_sym)
+            if [
+              :year, :month, :day, :hour, :min, :sec, :player_num
+            ].include?(m.to_sym)
               return match[m].to_i
             elsif [:server_time, :damage, :distance, :channel, :nearby_players]
               .include?(m.to_sym)

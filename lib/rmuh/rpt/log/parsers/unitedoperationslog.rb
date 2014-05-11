@@ -63,10 +63,14 @@ module RMuh
           def regex_matches(loglines)
             loglines.map do |l|
               line = nil
-              if GUID.match(l)
-                line = { type: :beguid }.merge(m_to_h($LAST_MATCH_INFO))
+              if LEFT.match(l)
+                line = { type: :disconnect }.merge(m_to_h($LAST_MATCH_INFO))
               elsif @include_chat && CHAT.match(l)
                 line = { type: :chat }.merge(m_to_h($LAST_MATCH_INFO))
+              elsif JOINED.match(l)
+                line = { type: :connect }.merge(m_to_h($LAST_MATCH_INFO))
+              elsif GUID.match(l)
+                line = { type: :beguid }.merge(m_to_h($LAST_MATCH_INFO))
               end
               line_modifiers(line) unless line.nil?
             end.compact
@@ -76,6 +80,7 @@ module RMuh
             when_am_i!(line)
             zulu!(line, @timezone)
             add_guid!(line)
+            strip_port!(line) if line[:type] == :connect
             line
           end
 
@@ -102,6 +107,12 @@ module RMuh
             line[:year] = time.year
             line[:month] = time.month
             line[:day] = time.day
+            line
+          end
+
+          def strip_port!(line)
+            line[:ipaddr] = line[:net].split(':')[0]
+            line.delete(:net)
             line
           end
         end
