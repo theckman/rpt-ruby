@@ -1,6 +1,4 @@
 # -*- coding: UTF-8 -*-
-require 'rspec'
-require File.join(File.expand_path('../..', __FILE__), 'lib/rmuh/version')
 
 describe RMuh do
   context '::VERSION_MAJ' do

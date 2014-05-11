@@ -1,8 +1,6 @@
 # -*- coding: UTF-8 -*-
 require 'rspec'
-require 'helpers/spec_helper'
-require File.join(repo_root, 'lib/rmuh/serverstats/advanced')
-require 'rmuh_serverstats_base'
+require_relative 'base'
 
 describe RMuh::ServerStats::Advanced do
   let(:s) do

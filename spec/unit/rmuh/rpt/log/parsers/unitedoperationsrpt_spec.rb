@@ -1,8 +1,5 @@
 # -*- coding: UTF-8 -*-
 require 'stringio'
-require 'rspec'
-require 'helpers/spec_helper'
-require File.join(repo_root, 'lib/rmuh/rpt/log/parsers/unitedoperationsrpt')
 
 describe RMuh::RPT::Log::Parsers::UnitedOperationsRPT do
   let(:uorpt) { RMuh::RPT::Log::Parsers::UnitedOperationsRPT.new }

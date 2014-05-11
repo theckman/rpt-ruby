@@ -10,7 +10,7 @@ module RMuh
         # class to be used for subclassing of your own parser
         #
         class Base
-          def initialize(opts = {})
+          def initialize(_opts = {})
           end
 
           def parse(loglines)

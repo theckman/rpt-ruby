@@ -1,8 +1,5 @@
 # -*- coding: UTF-8 -*-
-require 'rspec'
 require 'stringio'
-require 'helpers/spec_helper'
-require File.join(repo_root, 'lib/rmuh/rpt/log/fetch')
 
 describe RMuh::RPT::Log::Fetch do
   let(:url) do

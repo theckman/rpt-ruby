@@ -15,13 +15,14 @@ Gem::Specification.new do |g|
   g.email       = 't@heckman.io'
   g.homepage    = 'https://github.com/theckman/rmuh'
   g.license     = 'MIT'
+  g.required_ruby_version = '>= 1.9.3'
 
   g.test_files  = %x( git ls-files spec/* ).split
   g.files       = %x( git ls-files).split
 
   g.add_development_dependency 'rake', '~>10.1', '>= 10.1.0'
   g.add_development_dependency 'rspec', '~>2.14', '>= 2.14.1'
-  g.add_development_dependency 'rubocop', '~> 0.18', '>= 0.18.1'
+  g.add_development_dependency 'rubocop', '~> 0.21', '>= 0.21.0'
   g.add_development_dependency 'fuubar', '~> 1.3', '>= 1.3.2'
   g.add_development_dependency 'simplecov', '~> 0.8', '>= 0.8.2'
   g.add_development_dependency 'coveralls', '~> 0.7', '>= 0.7.0'
