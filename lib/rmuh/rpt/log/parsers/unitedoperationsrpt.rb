@@ -57,7 +57,6 @@ module RMuh
 
             loglines.map do |l|
               line = regex_match(l)
-              puts line
               zulu!(line, @timezone) if @to_zulu && line
               add_guid!(line) unless line.nil?
               line
