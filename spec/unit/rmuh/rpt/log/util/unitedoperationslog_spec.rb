@@ -1,7 +1,4 @@
 # -*- coding: UTF-8 -*-
-require 'rspec'
-require 'helpers/spec_helper'
-require File.join(repo_root, 'lib/rmuh/rpt/log/util/unitedoperationslog')
 
 describe RMuh::RPT::Log::Util::UnitedOperationsLog do
   before(:all) do

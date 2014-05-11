@@ -2,14 +2,13 @@
 # These are just specs to make sure the example files run with an exit
 # code of zero.
 #
-require 'rspec'
+
+require 'spec_helper'
 require 'open3'
-require 'helpers/spec_helper'
 
-DIR = File.expand_path('../../examples', __FILE__)
+DIR = File.expand_path('../../../examples', __FILE__)
 
-describe 'exampple files' do
-
+describe 'example files' do
   %w( basic_parsing.rb basic_serverstats.rb serverstats_advanced.rb
       serverstats_cache.rb uolog_parsing.rb uorpt_parsing.rb ).each do |e|
     context File.join(DIR, e) do

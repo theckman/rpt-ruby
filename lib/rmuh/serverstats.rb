@@ -21,12 +21,5 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require 'rmuh/rpt/log/fetch'
-
-require 'rmuh/rpt/log/parsers/base'
-require 'rmuh/rpt/log/parsers/unitedoperationslog'
-require 'rmuh/rpt/log/parsers/unitedoperationsrpt'
-
-require 'rmuh/rpt/log/util/unitedoperations'
-require 'rmuh/rpt/log/util/unitedoperationslog'
-require 'rmuh/rpt/log/util/unitedoperationsrpt'
+require 'rmuh/serverstats/base'
+require 'rmuh/serverstats/advanced'

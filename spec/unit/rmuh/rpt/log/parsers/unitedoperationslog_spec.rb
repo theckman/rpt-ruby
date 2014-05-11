@@ -1,11 +1,6 @@
 # -*- coding: UTF-8 -*-
 require 'stringio'
-require 'rspec'
 require 'tzinfo'
-require 'helpers/spec_helper'
-require File.join(repo_root, 'lib/rmuh/rpt/log/util/unitedoperations')
-require File.join(repo_root, 'lib/rmuh/rpt/log/util/unitedoperationslog')
-require File.join(repo_root, 'lib/rmuh/rpt/log/parsers/unitedoperationslog')
 
 describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
   let(:uolog) { RMuh::RPT::Log::Parsers::UnitedOperationsLog.new }

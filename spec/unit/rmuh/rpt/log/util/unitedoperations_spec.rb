@@ -1,8 +1,6 @@
 # -*- coding: UTF-8 -*-
 require 'rspec'
 require 'tzinfo'
-require 'helpers/spec_helper'
-require File.join(repo_root, 'lib/rmuh/rpt/log/util/unitedoperations')
 require 'helpers/unitedoperations'
 
 describe RMuh::RPT::Log::Util::UnitedOperations do
