@@ -165,42 +165,42 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
     it 'should properly set the :event_guid for killed' do
       x = @uo_util.add_guid!(spec_killed_line)
       y = spec_guid_reference_implementation(spec_killed_line)
-      expect(x.key?(:event_guid)).to be_true
+      expect(x.key?(:event_guid)).to be_truthy
       expect(x[:event_guid]).to eql y[:event_guid]
     end
 
     it 'should properly set the :event_guid for died' do
       x = @uo_util.add_guid!(spec_died_line)
       y = spec_guid_reference_implementation(spec_died_line)
-      expect(x.key?(:event_guid)).to be_true
+      expect(x.key?(:event_guid)).to be_truthy
       expect(y[:event_guid]).to eql y[:event_guid]
     end
 
     it 'should properly set the :event_guid for wounded' do
       x = @uo_util.add_guid!(spec_wounded_line)
       y = spec_guid_reference_implementation(spec_wounded_line)
-      expect(x.key?(:event_guid)).to be_true
+      expect(x.key?(:event_guid)).to be_truthy
       expect(x[:event_guid]).to eql y[:event_guid]
     end
 
     it 'should properly set the :event_guid for announcements' do
       x = @uo_util.add_guid!(spec_announcement_line)
       y = spec_guid_reference_implementation(spec_announcement_line)
-      expect(x.key?(:event_guid)).to be_true
+      expect(x.key?(:event_guid)).to be_truthy
       expect(x[:event_guid]).to eql y[:event_guid]
     end
 
     it 'should properly set the :event_guid for beguid' do
       x = @uo_util.add_guid!(spec_beguid_line)
       y = spec_guid_reference_implementation(spec_beguid_line)
-      expect(x.key?(:event_guid)).to be_true
+      expect(x.key?(:event_guid)).to be_truthy
       expect(x[:event_guid]).to eql y[:event_guid]
     end
 
     it 'should properly set the :event_guid for chat' do
       x = @uo_util.add_guid!(spec_chat_line)
       y = spec_guid_reference_implementation(spec_chat_line)
-      expect(x.key?(:event_guid)).to be_true
+      expect(x.key?(:event_guid)).to be_truthy
       expect(x[:event_guid]).to eql y[:event_guid]
     end
   end
@@ -346,7 +346,7 @@ describe RMuh::RPT::Log::Util::UnitedOperations do
       md = @ma.match('None."')
       h = @uo_util.m_to_h(md)
       expect(h[:nearby_players]).to be_an_instance_of Array
-      expect(h[:nearby_players].empty?).to be_true
+      expect(h[:nearby_players].empty?).to be_truthy
     end
   end
 

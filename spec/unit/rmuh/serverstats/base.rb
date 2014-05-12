@@ -37,15 +37,15 @@ shared_examples 'RMuh::ServerStats::Base' do
     it 'should set the default port if not provided' do
       h = srv_hash.dup
       RMuh::ServerStats::Base.validate_opts(h)
-      expect(h.key?(:port)).to be_true
+      expect(h.key?(:port)).to be_truthy
       expect(h[:port]).to eql RMuh::ServerStats::Base::DEFAULT_PORT
     end
 
     it 'should set the auto_cache key to true if not provided' do
       h = srv_hash.dup
       RMuh::ServerStats::Base.validate_opts(h)
-      expect(h.key?(:auto_cache)).to be_true
-      expect(h[:auto_cache]).to be_true
+      expect(h.key?(:auto_cache)).to be_truthy
+      expect(h[:auto_cache]).to be_truthy
     end
 
     it 'should return nil' do
@@ -122,7 +122,8 @@ shared_examples 'RMuh::ServerStats::Base' do
 
   context '#sync' do
     before do
-      GamespyQuery::Socket.any_instance.stub(:sync).and_return(one: 1)
+      allow_any_instance_of(GamespyQuery::Socket).to receive(:sync)
+        .and_return(one: 1)
     end
     let(:b) { RMuh::ServerStats::Base.new(host: '127.0.0.1') }
 
@@ -149,7 +150,7 @@ shared_examples 'RMuh::ServerStats::Base' do
 
     it 'should return the return value from the #sync method if cache true' do
       n = RMuh::ServerStats::Base.new(host: '127.0.0.1', cache: false)
-      n.stub(:sync).and_return(one: 'two')
+      allow(n).to receive(:sync).and_return(one: 'two')
       expect(n.send(:remote_stats)).to eql(one: 'two')
     end
   end
@@ -158,8 +159,8 @@ shared_examples 'RMuh::ServerStats::Base' do
     before(:each) do
       @b = RMuh::ServerStats::Base.new(host: '127.0.0.1')
       @bf = RMuh::ServerStats::Base.new(host: '127.0.0.1', cache: false)
-      @b.stub(:sync).and_return(one: 'two')
-      @bf.stub(:sync).and_return(one: 'two')
+      allow(@b).to receive(:sync).and_return(one: 'two')
+      allow(@bf).to receive(:sync).and_return(one: 'two')
     end
 
     it 'should take no args' do
@@ -181,8 +182,8 @@ shared_examples 'RMuh::ServerStats::Base' do
     before(:each) do
       @b = RMuh::ServerStats::Base.new(host: '127.0.0.1')
       @bf = RMuh::ServerStats::Base.new(host: '127.0.0.1', cache: false)
-      @b.stub(:sync).and_return(one: 'two')
-      @bf.stub(:sync).and_return(one: 'two')
+      allow(@b).to receive(:sync).and_return(one: 'two')
+      allow(@bf).to receive(:sync).and_return(one: 'two')
       @b.update_cache
     end
 
