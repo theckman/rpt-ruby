@@ -9,15 +9,23 @@ module RMuh
         #
         module UnitedOperationsLog
           ONE_DAY ||= 86_400
-          TIME ||= '^\s*?(?<hour>\d+?):(?<min>\d+?):(?<sec>\d+)\s' \
-                   'BattlEye\sServer:\s'
+          TIME_SHORT ||= '^\s*?(?<hour>\d+?):(?<min>\d+?):(?<sec>\d+)\s'
+          TIME ||= "#{TIME_SHORT}BattlEye\sServer:\s"
           GUID ||= Regexp.new(
-            "#{TIME}.*Verified\\sGUID\\s\\((?<player_beguid>.*?)\\).*#\\d+?" \
+            "#{TIME}.*Verified\\sGUID\\s\\((?<player_beguid>.*?)\\).*#" \
+            '(?<player_num>\\d+?)' \
             '\s(?<player>.+)$'
           )
           CHAT ||= Regexp.new(
             "#{TIME}\\((?<channel>Group|Global|Side|Vehicle|Command|Unknown)" \
             '\)\s+?(?<player>.+?):\s(?<message>.*)$'
+          )
+          JOINED ||= Regexp.new(
+            "#{TIME}Player\s\#(?<player_num>\\d+)\s(?<player>.*?)\s" \
+            '\\((?<net>.*?)\\)\sconnected'
+          )
+          LEFT ||= Regexp.new(
+            "#{TIME_SHORT}Player\s(?<player>.*?)\sdisconnected\."
           )
         end
       end
