@@ -16,7 +16,7 @@ describe 'example files' do
         _, _, s = Open3.capture3(
           "bundle exec ruby #{File.join(DIR, e)}"
         )
-        expect(s.success?).to be_true
+        expect(s.success?).to be_truthy
       end
     end
   end

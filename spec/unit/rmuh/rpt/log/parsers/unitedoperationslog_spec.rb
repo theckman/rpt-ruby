@@ -65,12 +65,12 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
 
     it 'should not include chat by default' do
       u = uolog.instance_variable_get(:@include_chat)
-      expect(u).to be_false
+      expect(u).to be_falsey
     end
 
     it 'should convert to zulu by default' do
       u = uolog.instance_variable_get(:@to_zulu)
-      expect(u).to be_true
+      expect(u).to be_truthy
     end
 
     it 'should use the UO timezone by default' do
@@ -193,7 +193,7 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
     it 'should set date as today if line (0400-2359) and now same range ' do
       tz = uolog.instance_variable_get(:@timezone)
       l = yday_line.dup
-      uolog.stub(:date_of_line_based_on_now) { tz.now }
+      allow(uolog).to receive(:date_of_line_based_on_now).and_return(tz.now)
       uolog.send(:when_am_i!, l)
       expect(l[:year]).to eql tz.now.year
       expect(l[:month]).to eql tz.now.month
@@ -204,7 +204,8 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
       d = RMuh::RPT::Log::Util::UnitedOperationsLog::ONE_DAY
       tz = uolog.instance_variable_get(:@timezone)
       l = yday_line.dup
-      uolog.stub(:date_of_line_based_on_now) { tz.now - d }
+      allow(uolog).to receive(:date_of_line_based_on_now)
+        .and_return(tz.now - d)
       uolog.send(:when_am_i!, l)
       expect(l[:year]).to eql((tz.now - d).year)
       expect(l[:month]).to eql((tz.now - d).month)
@@ -237,30 +238,30 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
     it 'should call where_am_i! and set the year/month/day' do
       l = { hour: 4, min: 0, sec: 0 }
       x = uolog.send(:line_modifiers, l)
-      expect(x.key?(:year)).to be_true
-      expect(x.key?(:month)).to be_true
-      expect(x.key?(:day)).to be_true
+      expect(x.key?(:year)).to be_truthy
+      expect(x.key?(:month)).to be_truthy
+      expect(x.key?(:day)).to be_truthy
     end
 
     it 'sould call zulu! and set the time to zulu' do
       l = { hour: 4, min: 0, sec: 0 }
       x = uolog.send(:line_modifiers, l)
-      expect(x.key?(:iso8601)).to be_true
-      expect(x.key?(:dtg)).to be_true
+      expect(x.key?(:iso8601)).to be_truthy
+      expect(x.key?(:dtg)).to be_truthy
     end
 
     it 'should call add_guid! and add the event_guid' do
       l = { hour: 4, min: 0, sec: 0 }
       x = uolog.send(:line_modifiers, l)
-      expect(x.key?(:event_guid)).to be_true
+      expect(x.key?(:event_guid)).to be_truthy
     end
 
     context 'when a user join event' do
       it 'should call strip_port!' do
         l = { hour: 4, min: 0, sec: 0, type: :connect, net: '127.0.0.1:443' }
         x = uolog.send(:line_modifiers, l)
-        expect(x.key?(:ipaddr)).to be_true
-        expect(x.key?(:net)).to be_false
+        expect(x.key?(:ipaddr)).to be_truthy
+        expect(x.key?(:net)).to be_falsey
       end
     end
 
@@ -268,7 +269,7 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
       it 'should not call strip_port!' do
         l = { hour: 4, min: 0, sec: 0, type: :x, net: '127.0.0.1:443' }
         x = uolog.send(:line_modifiers, l)
-        expect(x.key?(:net)).to be_true
+        expect(x.key?(:net)).to be_truthy
       end
     end
   end
@@ -324,23 +325,23 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
       u = RMuh::RPT::Log::Parsers::UnitedOperationsLog.new
       expect(
         u.send(:regex_matches, StringIO.new(chat_line)).empty?
-      ).to be_true
+      ).to be_truthy
     end
 
     it 'should compact the Array' do
       l = StringIO.new("Something1\nSomething2\n")
       x = uolog.send(:regex_matches, l)
-      expect(x.include?(nil)).to be_false
+      expect(x.include?(nil)).to be_falsey
     end
 
     it 'should call #line_modifiers' do
       x = uolog.send(:regex_matches, StringIO.new(guid_line))
-      expect(x[0].key?(:year)).to be_true
-      expect(x[0].key?(:month)).to be_true
-      expect(x[0].key?(:day)).to be_true
-      expect(x[0].key?(:iso8601)).to be_true
-      expect(x[0].key?(:dtg)).to be_true
-      expect(x[0].key?(:event_guid)).to be_true
+      expect(x[0].key?(:year)).to be_truthy
+      expect(x[0].key?(:month)).to be_truthy
+      expect(x[0].key?(:day)).to be_truthy
+      expect(x[0].key?(:iso8601)).to be_truthy
+      expect(x[0].key?(:dtg)).to be_truthy
+      expect(x[0].key?(:event_guid)).to be_truthy
     end
   end
 
@@ -396,13 +397,13 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
 
     it 'should call #regex_matches' do
       x = uolog.parse(StringIO.new(guid_line))
-      expect(x[0].key?(:type)).to be_true
-      expect(x[0].key?(:year)).to be_true
-      expect(x[0].key?(:month)).to be_true
-      expect(x[0].key?(:day)).to be_true
-      expect(x[0].key?(:iso8601)).to be_true
-      expect(x[0].key?(:dtg)).to be_true
-      expect(x[0].key?(:event_guid)).to be_true
+      expect(x[0].key?(:type)).to be_truthy
+      expect(x[0].key?(:year)).to be_truthy
+      expect(x[0].key?(:month)).to be_truthy
+      expect(x[0].key?(:day)).to be_truthy
+      expect(x[0].key?(:iso8601)).to be_truthy
+      expect(x[0].key?(:dtg)).to be_truthy
+      expect(x[0].key?(:event_guid)).to be_truthy
     end
   end
 end

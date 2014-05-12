@@ -140,7 +140,7 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsRPT do
     end
 
     it 'should set @to_zulu to true if nothing provided' do
-      expect(uorpt.instance_variable_get(:@to_zulu)).to be_true
+      expect(uorpt.instance_variable_get(:@to_zulu)).to be_truthy
     end
 
     it 'should set @timezone to America/Los_Angeles if nothing provided' do
@@ -243,7 +243,7 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsRPT do
     it 'should return an Array of hashes if a line matches' do
       x = uorpt.parse(loglines)
       expect(x).to be_an_instance_of Array
-      expect(x.empty?).to be_false
+      expect(x.empty?).to be_falsey
       x.each { |y| expect(y).to be_an_instance_of Hash }
     end
   end
