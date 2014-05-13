@@ -120,6 +120,20 @@ l = p.parse(f.log)
 At this specific moment `l` would contain an Array of Hashes corresponding to
 the log lines.
 
+Log Formatting
+--------------
+There are also built-in formatters that allow you to dump the events to a
+format similar to the original log lines. They were changed a bit to be more
+readable and relevant.
+
+The formatters just take an event and return a String. Assuming `event` is a
+single valid event here:
+
+```Ruby
+require 'rmuh'
+puts RMuh::PRT::Log::Formatters::UnitedOperationsRPT.format(event)
+```
+
 Server Stats
 ------------
 The `RMuh` gem also wraps the

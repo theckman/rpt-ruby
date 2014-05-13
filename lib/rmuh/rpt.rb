@@ -30,3 +30,7 @@ require 'rmuh/rpt/log/parsers/unitedoperationsrpt'
 require 'rmuh/rpt/log/util/unitedoperations'
 require 'rmuh/rpt/log/util/unitedoperationslog'
 require 'rmuh/rpt/log/util/unitedoperationsrpt'
+
+require 'rmuh/rpt/log/formatters/base'
+require 'rmuh/rpt/log/formatters/unitedoperationslog'
+require 'rmuh/rpt/log/formatters/unitedoperationsrpt'
