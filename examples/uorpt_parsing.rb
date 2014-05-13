@@ -5,8 +5,7 @@
 #
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
-require 'rmuh/rpt/log/fetch'
-require 'rmuh/rpt/log/parsers/unitedoperationsrpt'
+require 'rmuh'
 require 'ap'
 
 # the server log file

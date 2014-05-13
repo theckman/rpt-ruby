@@ -10,7 +10,7 @@
 # can learn more about those in the serverstats_cache.rb file.
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
-require 'rmuh/serverstats/advanced'
+require 'rmuh'
 require 'ap'
 
 # specify the UnitedOperations server

@@ -9,8 +9,7 @@
 #
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
-require 'rmuh/rpt/log/fetch'
-require 'rmuh/rpt/log/parsers/base'
+require 'rmuh'
 require 'ap'
 
 # set a constant for the URL

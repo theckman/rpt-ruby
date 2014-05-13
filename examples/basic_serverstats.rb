@@ -9,7 +9,7 @@
 #
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
-require 'rmuh/serverstats/base'
+require 'rmuh'
 require 'ap'
 
 # specify the UnitedOperations server
