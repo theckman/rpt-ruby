@@ -61,16 +61,13 @@ module RMuh
           private
 
           def regex_matches(loglines)
+            regexes = [[LEFT, :disconnect], [CHAT, :chat], [JOINED, :connect],
+                       [GUID, :beguid]]
             loglines.map do |l|
               line = nil
-              if LEFT.match(l)
-                line = { type: :disconnect }.merge(m_to_h($LAST_MATCH_INFO))
-              elsif @include_chat && CHAT.match(l)
-                line = { type: :chat }.merge(m_to_h($LAST_MATCH_INFO))
-              elsif JOINED.match(l)
-                line = { type: :connect }.merge(m_to_h($LAST_MATCH_INFO))
-              elsif GUID.match(l)
-                line = { type: :beguid }.merge(m_to_h($LAST_MATCH_INFO))
+              regexes.each do |reg|
+                next if !reg[0].match(l) || (reg[1] == :chat && !@include_chat)
+                line = { type: reg[1] }.merge(m_to_h($LAST_MATCH_INFO))
               end
               line_modifiers(line) unless line.nil?
             end.compact
