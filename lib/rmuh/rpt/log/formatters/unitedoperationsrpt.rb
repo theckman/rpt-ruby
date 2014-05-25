@@ -15,15 +15,10 @@ module RMuh
           class << self
             def format(event, level = :full)
               validate_and_set_level(level)
-              case event[:type]
-              when :wounded
-                format_wounded(event)
-              when :killed
-                format_killed(event)
-              when :died
-                format_died(event)
-              when :announcement
-                format_announcement(event)
+              type = event[:type]
+              if [:wounded, :killed, :died, :announcement].include?(type)
+                func = "format_#{type}".to_sym
+                send(func, event)
               else
                 nil
               end

@@ -4,6 +4,54 @@ require 'spec_helper'
 describe RMuh::RPT::Log::Formatters::UnitedOperationsLog do
   let(:uolog) { RMuh::RPT::Log::Formatters::UnitedOperationsLog }
 
+  describe 'time' do
+    context 'when given more than two args' do
+      it 'should raise ArgumentError' do
+        expect do
+          uolog.send(:time, nil, nil, nil)
+        end.to raise_error ArgumentError
+      end
+    end
+
+    context 'when given less than one arg' do
+      it 'should raise ArgumentError' do
+        expect do
+          uolog.send(:time)
+        end.to raise_error ArgumentError
+      end
+    end
+
+    context 'when given an event for a message event' do
+      let(:event) { { iso8601: '1970-01-01T00:00:00Z' } }
+
+      subject { uolog.send(:time, event, :m) }
+
+      it { should be_an_instance_of String }
+
+      it { should eql '1970-01-01T00:00:00Z Server: ' }
+    end
+
+    context 'when given an event for a chat event' do
+      let(:event) { { iso8601: '1970-01-01T00:00:00Z' } }
+
+      subject { uolog.send(:time, event, :c) }
+
+      it { should be_an_instance_of String }
+
+      it { should eql '1970-01-01T00:00:00Z Chat: ' }
+    end
+
+    context 'when given an event with the event not specified' do
+      let(:event) { { iso8601: '1970-01-01T00:00:00Z' } }
+
+      subject { uolog.send(:time, event) }
+
+      it { should be_an_instance_of String }
+
+      it { should eql '1970-01-01T00:00:00Z Server: ' }
+    end
+  end
+
   describe '.format_chat' do
     context 'when given more than one arg' do
       it 'should raise ArgumentError' do
@@ -32,6 +80,12 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsLog do
       subject { uolog.send(:format_chat, event) }
 
       it { should be_an_instance_of String }
+
+      it 'should call .time() with the proper args' do
+        expect(uolog).to receive(:time).with(event, :c)
+          .and_return('1970-01-01T00:00:00Z Chat: ')
+        subject
+      end
 
       it do
         should eql "1970-01-01T00:00:00Z Chat: (group) Heckman: Seriously?\n"
@@ -67,6 +121,12 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsLog do
 
       it { should be_an_instance_of String }
 
+      it 'should call .time() with the proper args' do
+        expect(uolog).to receive(:time).with(event)
+          .and_return('z Server: ')
+        subject
+      end
+
       it { should eql "z Server: Verified GUID (x) of player #0 y\n" }
     end
   end
@@ -99,6 +159,12 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsLog do
 
       it { should be_an_instance_of String }
 
+      it 'should call .time() with the proper args' do
+        expect(uolog).to receive(:time).with(event)
+          .and_return('z Server: ')
+        subject
+      end
+
       it { should eql "z Server: Player x disconnected\n" }
     end
   end
@@ -130,6 +196,12 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsLog do
       subject { uolog.send(:format_connect, event) }
 
       it { should be_an_instance_of String }
+
+      it 'should call .time() with the proper args' do
+        expect(uolog).to receive(:time).with(event)
+          .and_return('z Server: ')
+        subject
+      end
 
       it { should eql "z Server: Player #0 x (127.0.0.1) connected\n" }
     end
