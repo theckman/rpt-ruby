@@ -9,13 +9,9 @@ module RMuh
         class UnitedOperationsLog < RMuh::RPT::Log::Formatters::Base
           class << self
             def format(event)
-              type = event[:type]
-              if [:connect, :disconnect, :beguid, :chat].include?(type)
-                func = "format_#{type}".to_sym
-                send(func, event)
-              else
-                nil
-              end
+              return unless [:connect, :disconnect, :beguid, :chat]
+                .include?(event[:type])
+              send("format_#{event[:type]}".to_sym, event)
             end
 
             private
