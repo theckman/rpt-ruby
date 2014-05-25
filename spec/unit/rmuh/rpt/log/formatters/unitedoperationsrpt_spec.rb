@@ -177,6 +177,38 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsRPT do
     end
   end
 
+  describe '.beguid' do
+    context 'when given more than one arg' do
+      it 'should raise ArgumentError' do
+        expect do
+          uorpt.send(:beguid, nil, nil)
+        end.to raise_error ArgumentError
+      end
+    end
+
+    context 'when given less than one arg' do
+      it 'should raise ArgumentError' do
+        expect do
+          uorpt.send(:beguid)
+        end.to raise_error ArgumentError
+      end
+    end
+
+    context 'when given a non-nil value' do
+      subject { uorpt.send(:beguid, 'ohai') }
+
+      it { should be_an_instance_of String }
+
+      it { should eql ' (ohai)' }
+    end
+
+    context 'when given nil' do
+      subject { uorpt.send(:beguid, nil) }
+
+      it { should be_nil }
+    end
+  end
+
   describe '.format_died_ext' do
     context 'when given more than one arg' do
       it 'should raise ArgumentError' do
@@ -317,6 +349,19 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsRPT do
       end
     end
 
+    context 'when the event has a beguid for victim' do
+      before do
+        uorpt.instance_variable_set(:@level, :simple)
+      end
+      let(:event) { { victim: 'x', victim_beguid: 'abc' } }
+
+      subject { uorpt.send(:format_died, event) }
+
+      it { should be_an_instance_of String }
+
+      it { should eql "zt x (abc) has bled out or died of pain\"\n" }
+    end
+
     context 'when @level is :simple' do
       before { uorpt.instance_variable_set(:@level, :simple) }
 
@@ -397,6 +442,60 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsRPT do
       end
     end
 
+    context 'when the event has a beguid for both players' do
+      before do
+        uorpt.instance_variable_set(:@level, :simple)
+      end
+      let(:event) do
+        {
+          victim: 'x', victim_team: 'b', offender: 'y', offender_team: 'o',
+          victim_beguid: 'abc', offender_beguid: '123'
+        }
+      end
+
+      subject { uorpt.send(:format_killed, event) }
+
+      it { should be_an_instance_of String }
+
+      it { should eql "zt x (abc) (b) has been killed by y (123) (o)\"\n" }
+    end
+
+    context 'when the event has a beguid for the victim' do
+      before do
+        uorpt.instance_variable_set(:@level, :simple)
+      end
+      let(:event) do
+        {
+          victim: 'x', victim_team: 'b', offender: 'y', offender_team: 'o',
+          victim_beguid: 'abc'
+        }
+      end
+
+      subject { uorpt.send(:format_killed, event) }
+
+      it { should be_an_instance_of String }
+
+      it { should eql "zt x (abc) (b) has been killed by y (o)\"\n" }
+    end
+
+    context 'when the event has a beguid for the offender' do
+      before do
+        uorpt.instance_variable_set(:@level, :simple)
+      end
+      let(:event) do
+        {
+          victim: 'x', victim_team: 'b', offender: 'y', offender_team: 'o',
+          offender_beguid: '123'
+        }
+      end
+
+      subject { uorpt.send(:format_killed, event) }
+
+      it { should be_an_instance_of String }
+
+      it { should eql "zt x (b) has been killed by y (123) (o)\"\n" }
+    end
+
     context 'when @level is :simple' do
       before { uorpt.instance_variable_set(:@level, :simple) }
 
@@ -427,7 +526,7 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsRPT do
       end
     end
 
-    context 'when @level is :simple' do
+    context 'when @level is :full' do
       before do
         uorpt.instance_variable_set(:@level, :full)
         allow(uorpt).to receive(:format_killed_ext).and_return(' k')
@@ -475,6 +574,60 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsRPT do
           uorpt.send(:format_wounded)
         end.to raise_error ArgumentError
       end
+    end
+
+    context 'when the event has a beguid for both players' do
+      before do
+        uorpt.instance_variable_set(:@level, :simple)
+      end
+      let(:event) do
+        {
+          victim: 'x', victim_team: 'b', offender: 'y', offender_team: 'o',
+          victim_beguid: 'abc', offender_beguid: '123'
+        }
+      end
+
+      subject { uorpt.send(:format_wounded, event) }
+
+      it { should be_an_instance_of String }
+
+      it { should eql "zt x (abc) (b) has been wounded by y (123) (o)\"\n" }
+    end
+
+    context 'when the event has a beguid for only victim' do
+      before do
+        uorpt.instance_variable_set(:@level, :simple)
+      end
+      let(:event) do
+        {
+          victim: 'x', victim_team: 'b', offender: 'y', offender_team: 'o',
+          victim_beguid: 'abc'
+        }
+      end
+
+      subject { uorpt.send(:format_wounded, event) }
+
+      it { should be_an_instance_of String }
+
+      it { should eql "zt x (abc) (b) has been wounded by y (o)\"\n" }
+    end
+
+    context 'when the event has a beguid for only offender' do
+      before do
+        uorpt.instance_variable_set(:@level, :simple)
+      end
+      let(:event) do
+        {
+          victim: 'x', victim_team: 'b', offender: 'y', offender_team: 'o',
+          offender_beguid: '123'
+        }
+      end
+
+      subject { uorpt.send(:format_wounded, event) }
+
+      it { should be_an_instance_of String }
+
+      it { should eql "zt x (b) has been wounded by y (123) (o)\"\n" }
     end
 
     context 'when @level is :simple' do

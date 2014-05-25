@@ -58,9 +58,15 @@ module RMuh
               ". Nearby players (100m): #{n}"
             end
 
+            def beguid(beguid)
+              " (#{beguid})" unless beguid.nil?
+            end
+
             def format_wounded(e)
-              l = "#{server_time(e)} #{e[:victim]} (#{e[:victim_team]}) has "
-              l += "been wounded by #{e[:offender]} (#{e[:offender_team]})"
+              l = "#{server_time(e)} #{e[:victim]}"
+              l += "#{beguid(e[:victim_beguid])} (#{e[:victim_team]}) has "
+              l += "been wounded by #{e[:offender]}"
+              l += "#{beguid(e[:offender_beguid])} (#{e[:offender_team]})"
               l += format_wounded_ext(e) if [:full, :ext].include?(@level)
               l += "\"\n"
               l
@@ -71,8 +77,10 @@ module RMuh
             end
 
             def format_killed(e)
-              l = "#{server_time(e)} #{e[:victim]} (#{e[:victim_team]}) "
-              l += "has been killed by #{e[:offender]} (#{e[:offender_team]})"
+              l = "#{server_time(e)} #{e[:victim]}"
+              l += "#{beguid(e[:victim_beguid])} (#{e[:victim_team]}) "
+              l += "has been killed by #{e[:offender]}"
+              l += "#{beguid(e[:offender_beguid])} (#{e[:offender_team]})"
               l += format_killed_ext(e) if [:ext, :full].include?(@level)
               l += nearby_players(e) if @level == :full
               l += "\"\n"
@@ -87,8 +95,8 @@ module RMuh
             end
 
             def format_died(e)
-              l = "#{server_time(e)} #{e[:victim]} has bled out or died of " \
-                  'pain'
+              l = "#{server_time(e)} #{e[:victim]}"
+              l += "#{beguid(e[:victim_beguid])} has bled out or died of pain"
               l += format_died_ext(e) if [:full, :ext].include?(@level)
               l += nearby_players(e) if @level == :full
               l += "\"\n"
