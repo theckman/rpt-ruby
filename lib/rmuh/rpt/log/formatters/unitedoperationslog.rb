@@ -16,7 +16,7 @@ module RMuh
 
             private
 
-            def time(e, type = :m)
+            def logtime(e, type)
               l = "#{e[:iso8601]} "
               l += 'Server: ' if type == :m
               l += 'Chat: ' if type == :c
@@ -24,21 +24,22 @@ module RMuh
             end
 
             def format_connect(e)
-              "#{time(e)}Player ##{e[:player_num]} " \
+              "#{logtime(e, :m)}Player ##{e[:player_num]} " \
               "#{e[:player]} (#{e[:ipaddr]}) connected\n"
             end
 
             def format_disconnect(e)
-              "#{time(e)}Player #{e[:player]} disconnected\n"
+              "#{logtime(e, :m)}Player #{e[:player]} disconnected\n"
             end
 
             def format_beguid(e)
-              "#{time(e)}Verified GUID (#{e[:player_beguid]}) " \
+              "#{logtime(e, :m)}Verified GUID (#{e[:player_beguid]}) " \
               "of player ##{e[:player_num]} #{e[:player]}\n"
             end
 
             def format_chat(e)
-              "#{time(e, :c)}(#{e[:channel]}) #{e[:player]}: #{e[:message]}\n"
+              "#{logtime(e, :c)}(#{e[:channel]}) #{e[:player]}: " \
+              "#{e[:message]}\n"
             end
           end
         end

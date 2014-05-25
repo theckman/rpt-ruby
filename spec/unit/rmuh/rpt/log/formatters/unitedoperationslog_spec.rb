@@ -4,11 +4,11 @@ require 'spec_helper'
 describe RMuh::RPT::Log::Formatters::UnitedOperationsLog do
   let(:uolog) { RMuh::RPT::Log::Formatters::UnitedOperationsLog }
 
-  describe 'time' do
+  describe '.logtime' do
     context 'when given more than two args' do
       it 'should raise ArgumentError' do
         expect do
-          uolog.send(:time, nil, nil, nil)
+          uolog.send(:logtime, nil, nil, nil)
         end.to raise_error ArgumentError
       end
     end
@@ -16,7 +16,7 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsLog do
     context 'when given less than one arg' do
       it 'should raise ArgumentError' do
         expect do
-          uolog.send(:time)
+          uolog.send(:logtime, nil)
         end.to raise_error ArgumentError
       end
     end
@@ -24,7 +24,7 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsLog do
     context 'when given an event for a message event' do
       let(:event) { { iso8601: '1970-01-01T00:00:00Z' } }
 
-      subject { uolog.send(:time, event, :m) }
+      subject { uolog.send(:logtime, event, :m) }
 
       it { should be_an_instance_of String }
 
@@ -34,21 +34,11 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsLog do
     context 'when given an event for a chat event' do
       let(:event) { { iso8601: '1970-01-01T00:00:00Z' } }
 
-      subject { uolog.send(:time, event, :c) }
+      subject { uolog.send(:logtime, event, :c) }
 
       it { should be_an_instance_of String }
 
       it { should eql '1970-01-01T00:00:00Z Chat: ' }
-    end
-
-    context 'when given an event with the event not specified' do
-      let(:event) { { iso8601: '1970-01-01T00:00:00Z' } }
-
-      subject { uolog.send(:time, event) }
-
-      it { should be_an_instance_of String }
-
-      it { should eql '1970-01-01T00:00:00Z Server: ' }
     end
   end
 
@@ -82,7 +72,7 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsLog do
       it { should be_an_instance_of String }
 
       it 'should call .time() with the proper args' do
-        expect(uolog).to receive(:time).with(event, :c)
+        expect(uolog).to receive(:logtime).with(event, :c)
           .and_return('1970-01-01T00:00:00Z Chat: ')
         subject
       end
@@ -122,7 +112,7 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsLog do
       it { should be_an_instance_of String }
 
       it 'should call .time() with the proper args' do
-        expect(uolog).to receive(:time).with(event)
+        expect(uolog).to receive(:logtime).with(event, :m)
           .and_return('z Server: ')
         subject
       end
@@ -160,7 +150,7 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsLog do
       it { should be_an_instance_of String }
 
       it 'should call .time() with the proper args' do
-        expect(uolog).to receive(:time).with(event)
+        expect(uolog).to receive(:logtime).with(event, :m)
           .and_return('z Server: ')
         subject
       end
@@ -198,7 +188,7 @@ describe RMuh::RPT::Log::Formatters::UnitedOperationsLog do
       it { should be_an_instance_of String }
 
       it 'should call .time() with the proper args' do
-        expect(uolog).to receive(:time).with(event)
+        expect(uolog).to receive(:logtime).with(event, :m)
           .and_return('z Server: ')
         subject
       end
