@@ -109,19 +109,19 @@ module RMuh
           end
 
           def validate_bool_opt(opts, key)
-            if opts.key?(key) &&
-               ![TrueClass, FalseClass].include?(opts[key].class)
-              fail ArgumentError,
-                   "#{key} must be a boolean value (true|false)"
-            end
+            fail(
+              ArgumentError,
+              "#{key} must be a boolean value (true|false)"
+            ) if opts.key?(key) && \
+                 ![TrueClass, FalseClass].include?(opts[key].class)
           end
 
           def validate_timezone(opts)
-            if opts.key?(:timezone) &&
-               opts[:timezone].class != TZInfo::DataTimezone
-              fail ArgumentError,
-                   ':tiemzone must be an instance of TZInfo::DataTimezone'
-            end
+            fail(
+              ArgumentError,
+              ':tiemzone must be an instance of TZInfo::DataTimezone'
+            ) if opts.key?(:timezone) &&
+                 opts[:timezone].class != TZInfo::DataTimezone
           end
         end
       end
