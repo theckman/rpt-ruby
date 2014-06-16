@@ -1,13 +1,12 @@
 # -*- coding: UTF-8 -*-
-require 'stringio'
 
 describe RMuh::RPT::Log::Parsers::Base do
-  let(:text) { StringIO.new("This is a string.\nSo is this!") }
+  let(:text) { ['This is a string.', 'So is this!'] }
   let(:base) { RMuh::RPT::Log::Parsers::Base.new }
 
   context 'text' do
-    it 'should be a StringIO object' do
-      expect(text).to be_an_instance_of StringIO
+    it 'should be a Array object' do
+      expect(text).to be_an_instance_of Array
     end
   end
 
@@ -48,16 +47,12 @@ describe RMuh::RPT::Log::Parsers::Base do
       expect { base.parse(0.0) }.to raise_error ArgumentError
     end
 
-    it 'should raise an error when passed an Array' do
-      expect { base.parse([]) }.to raise_error ArgumentError
-    end
-
     it 'should raise an error when passed a Hash' do
       expect { base.parse({}) }.to raise_error ArgumentError
     end
 
-    it 'should not raise an error when passed a StringIO object' do
-      expect { base.parse(StringIO.new) }.to_not raise_error
+    it 'should not raise an error when passed a Array object' do
+      expect { base.parse([]) }.to_not raise_error
     end
 
     it 'should return an Array' do

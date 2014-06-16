@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 require 'English'
 require 'tzinfo'
-require 'stringio'
 require 'rmuh/rpt/log/parsers/base'
 require 'rmuh/rpt/log/util/unitedoperations'
 require 'rmuh/rpt/log/util/unitedoperationslog'
@@ -46,14 +45,14 @@ module RMuh
           # ++
           def initialize(opts = {})
             self.class.validate_opts(opts)
-            @include_chat = opts[:chat].nil? ? false : opts[:chat]
-            @to_zulu = opts[:to_zulu].nil? ? true : opts[:to_zulu]
-            @timezone = opts[:timezone].nil? ? UO_TZ : opts[:timezone]
+            @include_chat = opts.fetch(:chat, false)
+            @to_zulu = opts.fetch(:to_zulu, true)
+            @timezone = opts.fetch(:timezone, UO_TZ)
           end
 
           def parse(loglines)
-            unless loglines.is_a?(StringIO)
-              fail ArgumentError, 'arg 1 must be a StringIO object'
+            unless loglines.is_a?(Array)
+              fail ArgumentError, 'arg 1 must be an Array object'
             end
             regex_matches(loglines)
           end

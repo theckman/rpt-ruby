@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-require 'stringio'
 
 describe RMuh::RPT::Log::Parsers::UnitedOperationsRPT do
   let(:uorpt) { RMuh::RPT::Log::Parsers::UnitedOperationsRPT.new }
@@ -213,7 +212,7 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsRPT do
            '0.0015564] (GRID 0655306961). Yevgeniy Nikolayev position: ' \
            '[6498.62,6916.71,0.0204163] (GRID 0649806916). Distance between:' \
            ' 71.1653 meters. Near players (100m): None."'
-      StringIO.new("#{l1}\n#{l2}")
+      ["#{l1}", "#{l2}"]
     end
 
     it 'should not take more than one arg' do
@@ -228,14 +227,14 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsRPT do
       end.to raise_error ArgumentError
     end
 
-    it 'should fail if arg 1 is not an instance of StringIO' do
+    it 'should fail if arg 1 is not an instance of Array' do
       expect do
         uorpt.parse(nil)
       end.to raise_error ArgumentError
     end
 
     it 'should return an Array' do
-      ll = StringIO.new
+      ll = []
       x = uorpt.parse(ll)
       expect(x).to be_an_instance_of Array
     end

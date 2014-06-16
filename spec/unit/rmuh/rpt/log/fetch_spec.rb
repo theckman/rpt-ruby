@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-require 'stringio'
 
 describe RMuh::RPT::Log::Fetch do
   let(:url) do
@@ -86,12 +85,12 @@ describe RMuh::RPT::Log::Fetch do
   end
 
   context '#log' do
-    it 'should return a StringIO object' do
-      expect(fetch.log).to be_an_instance_of StringIO
+    it 'should return an Array object' do
+      expect(fetch.log).to be_an_instance_of Array
     end
 
     it 'should return the log' do
-      expect(fetch.log.read).to eql "RSpec, yo\n"
+      expect(fetch.log.join('')).to eql 'RSpec, yo'
     end
   end
 
