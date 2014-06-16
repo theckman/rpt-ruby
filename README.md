@@ -82,7 +82,7 @@ URL = 'http://arma2.unitedoperations.net/dump/SRV1/SRV1_RPT.txt'
 f = RMuh::RPT::Log::Fetch.new(URL)
 puts f.log
 ```
-In this case `f.log` returns a `StringIO` object which will be used by the
+In this case `f.log` returns an `Array` object which will be used by the
 parsers to parse the log files.
 
 If you want to specify a

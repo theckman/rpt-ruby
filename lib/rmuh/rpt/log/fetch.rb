@@ -32,8 +32,8 @@ module RMuh
         #
         def initialize(log_url, opts = {})
           @log_url = log_url
-          @byte_start = opts.key?(:byte_start) ? opts[:byte_start] : 0
-          @byte_end = opts.key?(:byte_end) ? opts[:byte_end] : nil
+          @byte_start = opts.fetch(:byte_start, 0)
+          @byte_end = opts.fetch(:byte_end, nil)
         end
 
         def byte_start=(bytes)
@@ -53,7 +53,7 @@ module RMuh
         def log
           headers = { 'Range' => "bytes=#{@byte_start}-#{@byte_end}" }
           response = self.class.get(@log_url, headers: headers)
-          StringIO.new(response.lines.map { |l| dos2unix(l) }.join)
+          response.lines.map { |l| dos2unix(l).gsub("\n", '') }
         end
 
         private

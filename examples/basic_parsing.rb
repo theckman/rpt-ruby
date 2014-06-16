@@ -19,11 +19,11 @@ URL = 'http://arma2.unitedoperations.net/dump/SRV1/SRV1_LOG.txt'
 # 1024 bytes
 f = RMuh::RPT::Log::Fetch.new(URL, byte_start: 0, byte_end: 1024)
 
-# logfile will become a StringIO object that is the contents of the log
+# logfile will become an Array object that is the contents of the log
 logfile = f.log
 
 # print the log
-puts "#### The full log\n#{logfile.readlines.join("\n")}\n#### End of log!"
+puts "#### The full log\n#{logfile.join("\n")}\n#### End of log!"
 
 # print the size of the log, f.size will return a Fixnum in bytes
 puts "Log size: #{f.size} byte(s)"

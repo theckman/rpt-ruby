@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-require 'stringio'
 require 'tzinfo'
 
 describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
@@ -286,7 +285,7 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
       "6:58:25 BattlEye Server: (Side) Major Lee Payne: I'm up, " \
       "radio doesn't work"
     end
-    let(:loglines) { StringIO.new("#{guid_line}\n#{chat_line}\n") }
+    let(:loglines) { ["#{guid_line}", "#{chat_line}"] }
 
     it 'should take no more than one arg' do
       expect do
@@ -301,7 +300,7 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
     end
 
     it 'should return an Array' do
-      expect(uolog.send(:regex_matches, StringIO.new))
+      expect(uolog.send(:regex_matches, []))
         .to be_an_instance_of Array
     end
 
@@ -312,30 +311,30 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
     end
 
     it 'should properly match a guid line' do
-      x = uolog.send(:regex_matches, StringIO.new(guid_line))
+      x = uolog.send(:regex_matches, [guid_line])
       expect(x[0][:type]).to eql :beguid
     end
 
     it 'should properly match a chat line' do
-      x = uolog.send(:regex_matches, StringIO.new(chat_line))
+      x = uolog.send(:regex_matches, [chat_line])
       expect(x[0][:type]).to eql :chat
     end
 
     it 'should not match a chat line if chat matching is disabled' do
       u = RMuh::RPT::Log::Parsers::UnitedOperationsLog.new
       expect(
-        u.send(:regex_matches, StringIO.new(chat_line)).empty?
+        u.send(:regex_matches, [chat_line]).empty?
       ).to be_truthy
     end
 
     it 'should compact the Array' do
-      l = StringIO.new("Something1\nSomething2\n")
+      l = ['Something1', 'Something2']
       x = uolog.send(:regex_matches, l)
       expect(x.include?(nil)).to be_falsey
     end
 
     it 'should call #line_modifiers' do
-      x = uolog.send(:regex_matches, StringIO.new(guid_line))
+      x = uolog.send(:regex_matches, [guid_line])
       expect(x[0].key?(:year)).to be_truthy
       expect(x[0].key?(:month)).to be_truthy
       expect(x[0].key?(:day)).to be_truthy
@@ -359,8 +358,8 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
       expect { uolog.parse }.to raise_error ArgumentError
     end
 
-    it 'should not fail if arg1 is a StringIO object' do
-      expect { uolog.parse(StringIO.new) }.to_not raise_error
+    it 'should not fail if arg1 is a Array object' do
+      expect { uolog.parse([]) }.to_not raise_error
     end
 
     it 'should fail if arg1 is a String' do
@@ -379,10 +378,6 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
       expect { uolog.parse(0.0) }.to raise_error ArgumentError
     end
 
-    it 'should fail if arg1 is a Array' do
-      expect { uolog.parse([]) }.to raise_error ArgumentError
-    end
-
     it 'should fail if arg1 is a Hash' do
       expect { uolog.parse({}) }.to raise_error ArgumentError
     end
@@ -392,11 +387,11 @@ describe RMuh::RPT::Log::Parsers::UnitedOperationsLog do
     end
 
     it 'should return an Array' do
-      expect(uolog.parse(StringIO.new)).to be_an_instance_of Array
+      expect(uolog.parse([])).to be_an_instance_of Array
     end
 
     it 'should call #regex_matches' do
-      x = uolog.parse(StringIO.new(guid_line))
+      x = uolog.parse([guid_line])
       expect(x[0].key?(:type)).to be_truthy
       expect(x[0].key?(:year)).to be_truthy
       expect(x[0].key?(:month)).to be_truthy

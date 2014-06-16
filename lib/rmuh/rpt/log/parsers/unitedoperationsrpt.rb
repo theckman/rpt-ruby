@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-require 'stringio'
+
 require 'English'
 require 'tzinfo'
 require 'rmuh/rpt/log/parsers/base'
@@ -43,16 +43,16 @@ module RMuh
           def initialize(opts = {})
             self.class.validate_opts(opts)
 
-            @to_zulu = opts[:to_zulu].nil? ? true : opts[:to_zulu]
-            @timezone = opts[:timezone].nil? ? UO_TZ : opts[:timezone]
+            @to_zulu = opts.fetch(:to_zulu, true)
+            @timezone = opts.fetch(:timezone, UO_TZ)
           end
 
-          # Parse the StringIO object which is the lines from the log.
-          # This expects arg 1 to be a StringIO object, otherwise it will
+          # Parse the Array object which is the lines from the log.
+          # This expects arg 1 to be an Array object, otherwise it will
           # throw an ArgumentError exception
           def parse(loglines)
-            unless loglines.is_a?(StringIO)
-              fail ArgumentError, 'argument 1 must be a StringIO object'
+            unless loglines.is_a?(Array)
+              fail ArgumentError, 'argument 1 must be an Array object'
             end
 
             loglines.map do |l|
