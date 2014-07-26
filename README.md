@@ -142,7 +142,19 @@ live statistics from the server. This includes current map, mission, play list,
 and others. Deep down this just uses the GameSpy protocol to get the
 information directly from the server.
 
-Here is a quick overview of how to use this functionality:
+### Future Functionality Note
+
+As of ArmA 2: Operation Arrowhead version `1.63` this is no longer
+working. This is due to GameSpy being shut down, and removed from ArmA 2 by
+Bohemia Interactive as part of
+[ArmA 2:OA Update 1.63](http://www.arma2.com/latest-news/arma-2-operation-arrowhead-update-163).
+Beyond the [Bohemia Interactive server list](http://master.bistudio.com/)
+there are no known alternatives to getting this information at the time of writing.
+
+*well fuck...*
+
+So, if you have an A2:OA server older than `1.63` (e.g., version `1.62`),
+here is a quick overview of how to use this functionality:
 
 ```Ruby
 require 'rmuh/serverstats/base'
