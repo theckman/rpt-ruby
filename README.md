@@ -136,52 +136,19 @@ puts RMuh::PRT::Log::Formatters::UnitedOperationsRPT.format(event)
 
 Server Stats
 ------------
-The `RMuh` gem also wraps the
-[GamespyQuery](https://rubygems.org/gems/gamespy_query) Rubygem for pulling
-live statistics from the server. This includes current map, mission, play list,
-and others. Deep down this just uses the GameSpy protocol to get the
-information directly from the server.
-
-### Future Functionality Note
+### Functionality Removed!
 
 As of ArmA 2: Operation Arrowhead version `1.63` this is no longer
 working. This is due to GameSpy being shut down, and removed from ArmA 2 by
 Bohemia Interactive as part of
 [ArmA 2:OA Update 1.63](http://www.arma2.com/latest-news/arma-2-operation-arrowhead-update-163).
 Beyond the [Bohemia Interactive server list](http://master.bistudio.com/)
-there are no known alternatives to getting this information at the time of writing.
+there are no known alternatives to getting this information at the time of
+writing.
 
 *well fuck...*
 
-So, if you have an A2:OA server older than `1.63` (e.g., version `1.62`),
-here is a quick overview of how to use this functionality:
-
-```Ruby
-require 'rmuh/serverstats/base'
-UO_IP = '70.42.74.59'
-s = RMuh::ServerStats::Base.new(host: UO_IP)
-puts s.stats
-```
-By default the `ServerStats::Base` class caches the information so you need to
-explicitly update the cache. This is not done automatically as it is a blocking
-operation, this allow you to block somewhere other than where you instantiate
-the object.
-
-If you want to avoid using the cache:
-
-```Ruby
-s = RMuh::ServerStats::Base.new(host: UO_IP, cache: false)
-```
-If you want to be able to pull each part of the returned data set using
-dot-notation, you can use the `Advanced` class:
-
-```Ruby
-require 'rmuh/serverstats/base'
-s = RMuh::ServerStats::Advanced.new(host: UO_IP)
-puts s.players
-```
-In this case, `players` is an Array. If you specify a key that doesn't exist
-you will get a NoMethodError exception.
+As such, this functionality was removed as of `0.4.0` of RMuh. Sorry.
 
 SUPPORT
 -------

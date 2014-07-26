@@ -23,4 +23,3 @@
 
 require 'rmuh/version'
 require 'rmuh/rpt'
-require 'rmuh/serverstats'

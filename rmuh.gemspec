@@ -31,5 +31,4 @@ Gem::Specification.new do |g|
   g.add_runtime_dependency 'tzinfo-data'
   g.add_runtime_dependency 'tzinfo', '~> 1.1'
   g.add_runtime_dependency 'httparty', '~> 0.12'
-  g.add_runtime_dependency 'gamespy_query', '~> 0.1', '>= 0.1.5'
 end
