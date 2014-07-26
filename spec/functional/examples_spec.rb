@@ -7,15 +7,13 @@ require 'spec_helper'
 require 'open3'
 
 DIR = File.expand_path('../../../examples', __FILE__)
+EXAMPLE_FILES = Dir.chdir(DIR) { Dir['*'] }.map { |f| File.expand_path(File.join(DIR, f)) }
 
-describe 'example files' do
-  %w( basic_parsing.rb basic_serverstats.rb serverstats_advanced.rb
-      serverstats_cache.rb uolog_parsing.rb uorpt_parsing.rb ).each do |e|
-    context File.join(DIR, e) do
+describe 'example file' do
+  EXAMPLE_FILES.each do |e|
+    context File.basename(e) do
       it 'should run and return a zero exit code' do
-        _, _, s = Open3.capture3(
-          "bundle exec ruby #{File.join(DIR, e)}"
-        )
+        _, _, s = Open3.capture3("bundle exec ruby #{e}")
         expect(s.success?).to be_truthy
       end
     end

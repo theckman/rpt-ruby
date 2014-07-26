@@ -3,3 +3,6 @@ MethodLength:
 
 CyclomaticComplexity:
   Max: 7
+
+LineLength:
+  Max: 120
