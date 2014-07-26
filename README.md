@@ -1,6 +1,6 @@
 RMuh
 ====
-[![Build Status](https://img.shields.io/travis/theckman/rmuh/master.svg)](https://travis-ci.org/theckman/rpt-ruby)
+[![Build Status](https://img.shields.io/travis/theckman/rmuh/master.svg)](https://travis-ci.org/theckman/rmuh)
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://tldrlegal.com/license/mit-license)
 [![RubyGems :: RMuh Gem Version](http://img.shields.io/gem/v/rmuh.svg)](https://rubygems.org/gems/rmuh)
 [![Coveralls Coverage](https://img.shields.io/coveralls/theckman/rmuh/master.svg)](https://coveralls.io/r/theckman/rmuh)
