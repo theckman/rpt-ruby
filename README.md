@@ -7,6 +7,11 @@ RMuh
 [![Code Climate](https://img.shields.io/codeclimate/github/theckman/rmuh.svg)](https://codeclimate.com/github/theckman/rmuh)
 [![Gemnasium](https://img.shields.io/gemnasium/theckman/rmuh.svg)](https://gemnasium.com/theckman/rmuh)
 
+**NOTICE**: UnitedOperations has dropped support for ArmA 2. So as of now, this
+project should be considered no longer maintained. Due to this tests are also
+failing, so Travis CI has been disabled by renaming the `.travis.yml` file to
+`.travis.yml.disabled'
+
 **RMuh**, a play on the name ArmA (Armed Assault), is a Ruby library for
 interacting with ArmA 2 servers (specifically tested against Operation
 Arrowhead servers).
